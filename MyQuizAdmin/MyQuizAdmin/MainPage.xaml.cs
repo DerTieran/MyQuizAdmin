@@ -29,7 +29,7 @@ namespace MyQuizAdmin
                 {
                     Symbol = Symbol.Contact,
                     Label = "GroupView",
-                    DestinationPage = typeof(Views.GroupView)
+                    DestinationPage = typeof(Views.GroupPage)
                 },
                 new NavMenuItem()
                 {
