@@ -29,6 +29,7 @@ namespace MyQuizAdmin.Controls
         private async void loginButton_Click(object sender, RoutedEventArgs e)
         {
             loginButton.IsEnabled = false;
+            passwordBox.IsEnabled = false;
             Request request = new Request();
             RegistrationResponse register = await request.register(new RegistrationData
             {
@@ -37,7 +38,7 @@ namespace MyQuizAdmin.Controls
 
             if (register != null && register.IsAdmin == 1)
             {
-                Windows.Storage.ApplicationData.Current.RoamingSettings.Values["deviceID"] = register.Id;
+                Windows.Storage.ApplicationData.Current.RoamingSettings.Values["deviceID"] = register.Id.ToString();
                 Hide();
             }
             else
@@ -46,6 +47,16 @@ namespace MyQuizAdmin.Controls
                 helpText.Foreground = new SolidColorBrush(Colors.Red);
             }
             loginButton.IsEnabled = true;
+            passwordBox.IsEnabled = true;
+        }
+
+        private void passwordBox_KeyUp(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter)
+            {
+                loginButton_Click(sender, e);
+                e.Handled = true;
+            }
         }
     }
 }

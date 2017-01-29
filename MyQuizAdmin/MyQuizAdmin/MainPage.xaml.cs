@@ -57,7 +57,7 @@ namespace MyQuizAdmin
         {
             this.InitializeComponent();
             
-            string deviceID = (string)Windows.Storage.ApplicationData.Current.RoamingSettings.Values["deviceID"];
+            string deviceID = Windows.Storage.ApplicationData.Current.RoamingSettings.Values["deviceID"].ToString();
             if (deviceID == null || deviceID.Length <= 0)
             {
                 ShowLoginDialog();
