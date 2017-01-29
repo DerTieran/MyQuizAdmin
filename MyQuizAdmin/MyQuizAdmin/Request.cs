@@ -7,12 +7,13 @@ using Newtonsoft.Json;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net;
+using MyQuizAdmin.Models;
 
 namespace MyQuizAdmin
 {
     class Request
     {
-        private const string BaseAddress = "http://h2653223.stratoserver.net/api";
+        private const string BaseAddress = "http://h2653223.stratoserver.net";
 
         private async Task<T> GET<T>(string path)
         {
@@ -30,17 +31,21 @@ namespace MyQuizAdmin
             return result;
         }
 
-        private async Task<Uri> POST<T>(string path, T data)
+        private async Task<T> POST<T>(string path, object data)
         {
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri(BaseAddress);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
+            T result = default(T);
             var content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
             HttpResponseMessage response = await client.PostAsync(path, content);
-            response.EnsureSuccessStatusCode();
-
-            return response.Headers.Location;
+            if (response.IsSuccessStatusCode)
+            {
+                string json = await response.Content.ReadAsStringAsync();
+                result = JsonConvert.DeserializeObject<T>(json);
+            }
+            return result;
         }
 
         private async Task<HttpStatusCode> DELETE(string path)
@@ -51,6 +56,12 @@ namespace MyQuizAdmin
 
             HttpResponseMessage response = await client.DeleteAsync(path);
             return response.StatusCode;
+        }
+
+        public async Task<RegistrationResponse> register(RegistrationData auth)
+        {
+            RegistrationResponse result = await POST<RegistrationResponse>("/api/devices", auth);
+            return result;
         }
     }
 }
