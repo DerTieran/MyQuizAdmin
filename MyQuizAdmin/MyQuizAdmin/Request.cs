@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net;
+using MyQuizAdmin.Models;
 
 namespace MyQuizAdmin
 {
@@ -55,6 +56,12 @@ namespace MyQuizAdmin
 
             HttpResponseMessage response = await client.DeleteAsync(path);
             return response.StatusCode;
+        }
+
+        public async Task<RegistrationResponse> register(RegistrationData auth)
+        {
+            RegistrationResponse result = await POST<RegistrationResponse>("/api/devices", auth);
+            return result;
         }
     }
 }
