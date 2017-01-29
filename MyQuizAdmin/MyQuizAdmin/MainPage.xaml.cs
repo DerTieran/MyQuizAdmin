@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using MyQuizAdmin.Controls;
 using MyQuizAdmin.Views;
+using System.Threading.Tasks;
 
 namespace MyQuizAdmin
 {
@@ -55,15 +56,26 @@ namespace MyQuizAdmin
         public MainPage()
         {
             this.InitializeComponent();
+            
+            string deviceID = (string)Windows.Storage.ApplicationData.Current.RoamingSettings.Values["deviceID"];
+            if (deviceID == null || deviceID.Length <= 0)
+            {
+                ShowLoginDialog();
+            }
 
             this.Loaded += (sender, args) =>
             {
                 Current = this;
-
                 this.TogglePaneButton.Focus(FocusState.Programmatic);
             };
 
             NavMenuList.ItemsSource = navlist;
+        }
+
+        private async void ShowLoginDialog()
+        {
+            LoginDialog loginDialog = new LoginDialog();
+            await loginDialog.ShowAsync();
         }
 
         public Frame AppFrame { get { return this.frame; } }
