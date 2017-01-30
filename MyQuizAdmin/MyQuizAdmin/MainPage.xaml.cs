@@ -29,8 +29,8 @@ namespace MyQuizAdmin
                 new NavMenuItem()
                 {
                     Symbol = Symbol.Contact,
-                    Label = "GroupView",
-                    DestinationPage = typeof(Views.GroupPage)
+                    Label = "Page1",
+                    DestinationPage = typeof(Views.Page1)
                 },
                 new NavMenuItem()
                 {
@@ -41,8 +41,8 @@ namespace MyQuizAdmin
                 new NavMenuItem()
                 {
                     Symbol = Symbol.Favorite,
-                    Label = "Page3",
-                    DestinationPage = typeof(Views.Page3)
+                    Label = "GroupView",
+                    DestinationPage = typeof(Views.GroupPage)
                 }
             });
 

@@ -15,12 +15,16 @@ namespace MyQuizAdmin
     /// </summary>
     sealed partial class App : Application
     {
-        public static ObservableCollection<string> groups = new ObservableCollection<string>();
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
-        
+        public App()
+        {
+            this.InitializeComponent();
+            this.Suspending += OnSuspending;
+        }
+
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
@@ -47,7 +51,7 @@ namespace MyQuizAdmin
                 // Set the default language
                 shell.Language = Windows.Globalization.ApplicationLanguages.Languages[0];
 
-                //shell.AppFrame.NavigationFailed += OnNavigationFailed;
+                shell.AppFrame.NavigationFailed += OnNavigationFailed;
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
@@ -62,7 +66,7 @@ namespace MyQuizAdmin
             {
                 // When the navigation stack isn't restored, navigate to the first page
                 // suppressing the initial entrance animation.
-                shell.AppFrame.Navigate(typeof(Views.GroupPage), e.Arguments, new Windows.UI.Xaml.Media.Animation.SuppressNavigationTransitionInfo());
+                shell.AppFrame.Navigate(typeof(Views.Page1), e.Arguments, new Windows.UI.Xaml.Media.Animation.SuppressNavigationTransitionInfo());
             }
 
             // Ensure the current window is active

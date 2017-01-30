@@ -1,9 +1,9 @@
-﻿namespace MyQuizAdmin.Model
+﻿namespace MyQuizAdmin.Models
 {
     public class Group
     {
         public int id;
-        public string name;
+        public string title;
 
     }
 }

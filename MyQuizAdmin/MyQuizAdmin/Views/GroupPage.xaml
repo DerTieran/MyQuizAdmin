@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:local="using:MyQuizAdmin.Views"
-    xmlns:models="using:MyQuizAdmin.Model"
+    xmlns:models="using:MyQuizAdmin.Models"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
@@ -21,7 +21,7 @@
             <controls:MasterDetailsView.ItemTemplate>
                 <DataTemplate x:DataType="models:Group">
                     <StackPanel Margin="0,8">
-                        <TextBox Text="{x:Bind name}" />
+                        <TextBox Text="{x:Bind title}" />
                     </StackPanel>
                 </DataTemplate>
             </controls:MasterDetailsView.ItemTemplate>

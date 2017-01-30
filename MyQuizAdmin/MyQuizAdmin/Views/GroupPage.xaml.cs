@@ -1,4 +1,4 @@
-﻿using MyQuizAdmin.Model;
+﻿using MyQuizAdmin.Models;
 using System;
 using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
@@ -16,7 +16,7 @@ namespace MyQuizAdmin.Views
             
             Groups = new List<Group>
             {
-                new Group { id = 0, name = "g1" }
+                new Group { id = 0, title = "g1" }
             };
             
             this.InitializeComponent();
