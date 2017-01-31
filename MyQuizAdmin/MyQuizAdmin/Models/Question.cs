@@ -6,19 +6,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Quizapp
+namespace MyQuizAdmin.Views
 {
    public class Question :INotifyPropertyChanged
     {
         private string nQuestion { get; set; }
 
+        public int id { get; set; }
         public string question
         {
             set { nQuestion = value; OnPropertyChanged("question");}
             get { return nQuestion; }
         }
 
-        public ObservableCollection<string> awnsers { get; set; }
+        public ObservableCollection<string> awnsers = new ObservableCollection<string>();
 
         public event PropertyChangedEventHandler PropertyChanged;
 

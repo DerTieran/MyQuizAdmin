@@ -5,7 +5,8 @@
     xmlns:local="using:MyQuizAdmin.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    Loaded="Page_Loaded">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
           EntranceNavigationTransitionInfo.IsTargetElement="True">
@@ -14,33 +15,34 @@
         <StackPanel Margin="250,100,0,0" Width="500" VerticalAlignment="Top" HorizontalAlignment="Left">
             <StackPanel Orientation="Horizontal">
                 <TextBox Name="tbx_questionlist" Width="400"/>
-                <Button Name="bt_questionlistDel" Content="-" Width="50"/>
-                <Button Name="bt_questionlistAdd" Content="+" Width="50"/>
+                <Button Name="bt_questionlistDel" Content="-" Width="50" Click="bt_questionlistDel_Click"/>
+                <Button Name="bt_questionlistAdd" Content="+" Width="50" Click="bt_questionlistAdd_Click"/>
             </StackPanel>
-            <ComboBox Name="cbx_questionListEdit" Width="500"/>
-            <ListBox Name="lbx_question" Margin="0,70,0,0" Height="600"/>
+            <ComboBox Name="cbx_questionListEdit" Width="500" DisplayMemberPath="name" SelectionChanged="cbx_questionListEdit_SelectionChanged"/>
+            <ListBox Name="lbx_question" Margin="0,70,0,0" Height="600" DisplayMemberPath="question" SelectionChanged="lbx_question_SelectionChanged"/>
             <StackPanel Orientation="Horizontal">
-                <Button Name="bt_questionDel" Content="-" Width="100"/>
-                <Button Name="bt_questionAdd" Content="+" Width="100" Margin="100,0,0,0"/>
+                <Button Name="bt_questionDel" Content="-" Width="100" Click="bt_questionDel_Click"/>
+                <Button Name="bt_questionAdd" Content="+" Width="100" Margin="100,0,0,0" Click="bt_questionAdd_Click"/>
                 <Button Name="bt_questionSave" Content="Save" Width="100" Margin="100,0,0,0"/>
             </StackPanel>
         </StackPanel>
         
         <!--Valuepanel-->
-        <StackPanel Margin="1100,110,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="500">
+        <StackPanel Margin="1100,110,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="500" DataContext="{Binding ElementName=lbx_question,Path=SelectedItem,Mode=TwoWay}">
             <TextBlock Text="Fragetyp" Height="22"/>
             <ComboBox Name="cbx_questionTyp" Width="500"/>
             <TextBlock Text="Fragebogen" Margin="0,48,0,0" Height="22"/>
+            <ListBox Name="lbx_questionListSelect" Height="100"/>
             <ComboBox Name="cbx_questionListSelect" Width="500" />
             <TextBlock Text="Frage" Margin="0,60,0,0" Height="20"/>
-            <TextBox Name="tbx_question" Height="60" TextWrapping="Wrap" AcceptsReturn="True"/>
+            <TextBox Name="tbx_question" Height="60" TextWrapping="Wrap" AcceptsReturn="True" Text="{Binding question,Mode=TwoWay}"/>
             <TextBlock Text="Antworten" Margin="0,100,0,0" Height="22"/>
-            <ListBox Name="lbx_answer" Height="308"/>
+            <ListBox Name="lbx_answer" Height="208"/>
             <StackPanel Orientation="Horizontal">
                 <TextBox Name="tbx_answer" Width="300"/>
                 <ToggleButton Name="tbt_result" Content="Ergebnis" Width="100" Height="32"/>
-                <Button Name="bt_answerDel" Content="-" Width="50" Height="32"/>
-                <Button Name="bt_answerAdd" Content="+" Width="50" Height="32"/>
+                <Button Name="bt_answerDel" Content="-" Width="50" Height="32" Click="bt_answerDel_Click"/>
+                <Button Name="bt_answerAdd" Content="+" Width="50" Height="32" Click="bt_answerAdd_Click"/>
 
             </StackPanel>
         </StackPanel>
