@@ -48,6 +48,8 @@ namespace MyQuizAdmin.Controls
             }
             loginButton.IsEnabled = true;
             passwordBox.IsEnabled = true;
+            passwordBox.Focus(FocusState.Programmatic);
+            passwordBox.SelectAll();
         }
 
         private void passwordBox_KeyUp(object sender, KeyRoutedEventArgs e)
@@ -57,6 +59,11 @@ namespace MyQuizAdmin.Controls
                 loginButton_Click(sender, e);
                 e.Handled = true;
             }
+        }
+
+        private void passwordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            loginButton.IsEnabled = passwordBox.Password.Length > 0;
         }
     }
 }
