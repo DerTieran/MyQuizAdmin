@@ -6,20 +6,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyQuizAdmin.Views
+namespace MyQuizAdmin.Models
 {
    public class Question :INotifyPropertyChanged
     {
-        private string nQuestion { get; set; }
+        private string notifyText { get; set; }
 
         public int id { get; set; }
-        public string question
+        public bool isVote { get; set; }
+        public bool isSingleChoice { get; set; }
+        public string text
         {
-            set { nQuestion = value; OnPropertyChanged("question");}
-            get { return nQuestion; }
+            set { notifyText = value; OnPropertyChanged("text");}
+            get { return notifyText; }
         }
 
-        public ObservableCollection<string> awnsers = new ObservableCollection<string>();
+        public ObservableCollection<string> awnsers { get; set; } = new ObservableCollection<string>();
 
         public event PropertyChangedEventHandler PropertyChanged;
 

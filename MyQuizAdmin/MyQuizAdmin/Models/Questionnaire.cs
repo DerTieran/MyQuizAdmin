@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyQuizAdmin.Views
+namespace MyQuizAdmin.Models
 {
     public class Questionnaire
     {
         public int id { get; set; }
         public string name { get; set; }
 
-        public ObservableCollection<Question> questions = new ObservableCollection<Question>();
+        public ObservableCollection<Question> questions { get; set; } = new ObservableCollection<Question>();
     }
 }

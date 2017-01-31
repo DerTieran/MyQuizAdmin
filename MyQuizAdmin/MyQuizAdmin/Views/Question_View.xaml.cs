@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using Windows.UI.Xaml.Controls;
+using MyQuizAdmin.Models;
+using System.Collections.Generic;
 
 namespace MyQuizAdmin.Views
 {
@@ -10,34 +12,23 @@ namespace MyQuizAdmin.Views
     public sealed partial class Question_View : Page
     {
         public ObservableCollection<Questionnaire> questionlist = new ObservableCollection<Questionnaire>();
+        public Request request = new Request();
 
         public Question_View()
         {
             this.InitializeComponent();
         }
 
-        private void Page_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private async void Page_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            Questionnaire testListe = new Questionnaire();
-            testListe.name = "test";
-            Question testfrage = new Question();
-            testfrage.question = "hat es geklappt?";
-            testfrage.awnsers.Add("ja");
-            testfrage.awnsers.Add("Nein");
-
-            testListe.questions.Add(testfrage);
-            testListe.questions.Add(testfrage);
-            questionlist.Add(testListe);
-            questionlist.Add(testListe);
-            questionlist.Add(testListe);
-            cbx_questionListEdit.ItemsSource =questionlist;
+            questionlist = await request.questionnaireRequest();
+            cbx_questionListEdit.ItemsSource = questionlist;
+            //lbx_question.ItemsSource = await request.questionRequest();
         }
 
-        private void cbx_questionListEdit_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void cbx_questionListEdit_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var questions = cbx_questionListEdit.SelectedItem as Questionnaire;
-            if (questions != null)
-                lbx_question.ItemsSource = questions.questions;
+            var selectetQuestionnaire = cbx_questionListEdit.SelectedItem as Questionnaire;
 
         }
 
@@ -72,10 +63,14 @@ namespace MyQuizAdmin.Views
 
         private void bt_questionAdd_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
+
             var questionaire = cbx_questionListEdit.SelectedItem as Questionnaire;
             Question newQuestion = new Question();
-            newQuestion.question = "neue Frage";
-            questionaire.questions.Add(newQuestion);
+            newQuestion.text = "neue Frage";
+            if (questionaire != null)
+                questionaire.questions.Add(newQuestion);
+
+            lbx_question.ItemsSource = questionaire.questions;
         }
 
         private void bt_answerDel_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
