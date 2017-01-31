@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyQuizAdmin.Views
+namespace MyQuizAdmin.Models
 {
     public class StaticTestData
     {
@@ -73,5 +73,23 @@ namespace MyQuizAdmin.Views
     {
         public string answer { get; set; }
         public int amount { get; set; }
+    }
+
+    public class SQuestionPeople
+    {
+        public int id { get; set; }
+        public string textPeop { get; set; }
+        public List<ProtStatValues> listAnswerId { get; set; }
+
+        public SQuestionPeople()
+        {
+            listAnswerId = new List<ProtStatValues>();
+        }
+    }
+
+    public class ProtStatValues
+    {
+        public  string Name { get; set; }
+        public int Amount { get; set; }
     }
 }

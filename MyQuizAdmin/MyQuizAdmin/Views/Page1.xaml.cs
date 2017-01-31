@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Linq;
+using Windows.UI.Popups;
 using Windows.UI.Xaml.Controls;
 using WinRTXamlToolkit.Controls.DataVisualization.Charting;
+using MyQuizAdmin.Models;
+using System.Collections.Generic;
+using MyQuizAdmin;
 
 namespace MyQuizAdmin.Views
 {
@@ -12,56 +16,76 @@ namespace MyQuizAdmin.Views
     {
         StaticTestData staticTestData;
         Group group;
-        Question question;
+        People people;
         bool LayoutUpdateFlag = true;
+        Request request = new Request();
 
         public Page1()
         {
             this.InitializeComponent();
         }
 
-        private void Page_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private async void Page_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            staticTestData = new StaticTestData();
-            staticTestData.id = 0;
-            staticTestData.group.Add(new Group { id = 0, titel = "Angewandte Informatik" });
+            //staticTestData = new StaticTestData();
+            //staticTestData.id = 0;
+            //staticTestData.group.Add(new Group { id = 0, titel = "Angewandte Informatik" });
+            //staticTestData.group[0].people.Add(new People { idPeop = 0, name = "Ruthe" });
+            //staticTestData.group[0].people[0].questionPeople.Add(new QuestionPeople { id = 0, textPeop = "Wie war gut hat er Präsentiert" });
+            //staticTestData.group[0].people[0].questionPeople[0].listAnswerId.Add(new ListAnswersID { answer = "sehr gut", amount = 12 });
+            //staticTestData.group[0].people[0].questionPeople[0].listAnswerId.Add(new ListAnswersID { answer = "gut", amount = 2 });
+            //staticTestData.group[0].people[0].questionPeople[0].listAnswerId.Add(new ListAnswersID { answer = "schlecht", amount = 6 });
+            //staticTestData.group[0].people[0].questionPeople[0].listAnswerId.Add(new ListAnswersID { answer = "sehr schlecht", amount = 3 });
+            //staticTestData.group[0].people[0].questionPeople.Add(new QuestionPeople { id = 1, textPeop = "Wie hat er sich Präsentiert" });
+            //staticTestData.group[0].people[0].questionPeople[1].listAnswerId.Add(new ListAnswersID { answer = "sehr gut", amount = 3 });
+            //staticTestData.group[0].people[0].questionPeople[1].listAnswerId.Add(new ListAnswersID { answer = "gut", amount = 2 });
+            //staticTestData.group[0].people[0].questionPeople[1].listAnswerId.Add(new ListAnswersID { answer = "schlecht", amount = 15 });
+            //staticTestData.group[0].people[0].questionPeople[1].listAnswerId.Add(new ListAnswersID { answer = "sehr schlecht", amount = 15 });
+            //staticTestData.group[0].people.Add(new People { idPeop = 1, name = "Johnny" });
+            //staticTestData.group[0].question.Add(new Question { id = 0, text = "Wie war die Vorlesung" });
+            //staticTestData.group[0].question[0].listAnswerId.Add(new ListAnswersID { answer = "sehr gut", amount = 4 });
+            //staticTestData.group[0].question[0].listAnswerId.Add(new ListAnswersID { answer = "gut", amount = 5 });
+            //staticTestData.group[0].question[0].listAnswerId.Add(new ListAnswersID { answer = "schlecht", amount = 2 });
+            //staticTestData.group[0].question[0].listAnswerId.Add(new ListAnswersID { answer = "sehr schlecht", amount = 1 });
+            //staticTestData.group[0].question.Add(new Question { id = 1, text = "Fandet ihr die Präsentation gut" });
+            //staticTestData.group[0].question[1].listAnswerId.Add(new ListAnswersID { answer = "sehr gut", amount = 2 });
+            //staticTestData.group[0].question[1].listAnswerId.Add(new ListAnswersID { answer = "gut", amount = 1 });
+            //staticTestData.group[0].question[1].listAnswerId.Add(new ListAnswersID { answer = "schlecht", amount = 8 });
+            //staticTestData.group[0].question[1].listAnswerId.Add(new ListAnswersID { answer = "sehr schlecht", amount = 11 });
 
-            staticTestData.group[0].question.Add(new Question { id = 0, text = "Wie war die Vorlesung" });
-            staticTestData.group[0].question[0].listAnswerId.Add(new ListAnswersID { answer = "sehr gut", amount = 4 });
-            staticTestData.group[0].question[0].listAnswerId.Add(new ListAnswersID { answer = "gut", amount = 5 });
-            staticTestData.group[0].question[0].listAnswerId.Add(new ListAnswersID { answer = "schlecht", amount = 2 });
-            staticTestData.group[0].question[0].listAnswerId.Add(new ListAnswersID { answer = "sehr schlecht", amount = 1 });
-            staticTestData.group[0].question.Add(new Question { id = 1, text = "Fandet ihr die Präsentation gut" });
-            staticTestData.group[0].question[1].listAnswerId.Add(new ListAnswersID { answer = "sehr gut", amount = 2 });
-            staticTestData.group[0].question[1].listAnswerId.Add(new ListAnswersID { answer = "gut", amount = 1 });
-            staticTestData.group[0].question[1].listAnswerId.Add(new ListAnswersID { answer = "schlecht", amount = 8 });
-            staticTestData.group[0].question[1].listAnswerId.Add(new ListAnswersID { answer = "sehr schlecht", amount = 11 });
-            g_staticPag.DataContext = staticTestData.group[staticTestData.id];
-            cbx_groups.ItemsSource = staticTestData.group;
+            List<GroupResponse> groupResponList = await request.GetGroups();             
+            cbx_groups.ItemsSource = groupResponList;
+
+
+            
         }
 
-        private void lbx_question_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void cbx_groups_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var AnSelected = lbx_question.SelectedItem as Question;
-            if (AnSelected.listAnswerId != null)
+            var SelectedGroup = cbx_groups.SelectedItem as GroupResponse;
+            //lbx_people.ItemsSource = group.people;
+            List<Topic> topicResponList = await request.getTopicsForGroup(SelectedGroup);
+            lbx_people.ItemsSource = topicResponList;
+        }
+
+        private async void txb_searchpeople_SelectionChanged(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            var item = await request.getTopicsForGroup(cbx_groups.SelectedItem as GroupResponse);
+            if (lbx_people.ItemsSource != null)
             {
-                (ColumnChart.Series[0] as ColumnSeries).ItemsSource = AnSelected.listAnswerId;
+                this.lbx_people.ItemsSource = item.Where(w => w.Name.ToUpper().Contains(txb_searchpeople.Text.ToUpper()) || w.Name.ToUpper().Contains(txb_searchpeople.Text.ToUpper()));
+                LayoutUpdateFlag = true;
             }
         }
 
-        private void cbx_groups_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void lbx_people_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var item = cbx_groups.SelectedItem as Group;
-            group = item;
-            lbx_question.ItemsSource = group.question;
-        }
+            //var PeSelect = lbx_people.SelectedItem as People;
+            lv_static.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            lv_static.ItemsSource = await request.getResultForTopicInGroup(new Topic(), new Group());
 
-        private void txb_search_SelectionChanged(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-            this.lbx_question.ItemsSource = group.question.Where(w => w.text.ToUpper().Contains(txb_search.Text.ToUpper()) || w.text.ToUpper().Contains(txb_search.Text.ToUpper()));
-            LayoutUpdateFlag = true;
-        }
 
- 
+
+        }
     }
 }

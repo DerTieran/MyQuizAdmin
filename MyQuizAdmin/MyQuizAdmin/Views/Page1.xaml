@@ -11,31 +11,65 @@
 
     <Grid Name="g_staticPag" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
           EntranceNavigationTransitionInfo.IsTargetElement="True">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="Wide">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="750"></AdaptiveTrigger>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="sp_settings.(Grid.Column)" Value="0" />
+                        <Setter Target="lv_static.(Grid.Column)" Value="1" />
+                        <Setter Target="lv_static.(Grid.Row)" Value="0" />
+                        <Setter Target="sp_settings.(Grid.Row)" Value="0" />
 
+
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="small">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"></AdaptiveTrigger>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="sp_settings.(Grid.Column)" Value="0" />
+                        <Setter Target="sp_settings.(Grid.Row)" Value="0" />
+                        <Setter Target="lv_static.(Grid.Column)" Value="0" />
+                        <Setter Target="lv_static.(Grid.Row)" Value="1" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
-        <Border Grid.Column="0" Width="400" Margin="0" >
-            <StackPanel Width="300" Margin="100,50,0,0" >
-                <TextBlock Text="Gruppen" />
-                <ComboBox Name="cbx_groups"  Width="300"  Height="30" SelectionChanged="cbx_groups_SelectionChanged" DisplayMemberPath="titel">
-                    <!--<ComboBoxItem Content="{Binding group}"/>-->
-                </ComboBox>
-                <TextBox Name="txb_search" Width="300" Height="30" Margin="0,20,0,5" SelectionChanged="txb_search_SelectionChanged" />
-                <ListBox Name="lbx_question" Width="300" Margin="0,0,0,10" DisplayMemberPath="text" SelectionChanged="lbx_question_SelectionChanged">
-                </ListBox>
-            </StackPanel>
-        </Border>
-        <Border Grid.Column="1">
-            <StackPanel Margin="100,50,50,50" >
-                <Charting:Chart x:Name="ColumnChart" HorizontalAlignment="Left" VerticalAlignment="Top"
-                        Margin="100,0,100,0" Width="400" Height="400" Grid.Row="0" Grid.Column="0">
-                    <Charting:ColumnSeries Margin="0" IndependentValuePath="answer" Title=""
-                               DependentValuePath="amount" IsSelectionEnabled="True" />
-                </Charting:Chart>
-            </StackPanel>
-        </Border>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <RelativePanel Name="sp_settings" Grid.Column="0" Grid.Row="0">
+            <TextBlock Name="txb_group" Text="Gruppen" />
+            <ComboBox Margin="0,5,0,0" Name="cbx_groups"  Width="300"  Height="30" SelectionChanged="cbx_groups_SelectionChanged" DisplayMemberPath="Title" RelativePanel.Below="txb_group"/>
+            <!--<ComboBoxItem Content="{Binding group}"/>-->
+            <TextBox Margin="0,10,0,0" Name="txb_searchpeople" Width="300" Height="30" SelectionChanged="txb_searchpeople_SelectionChanged" RelativePanel.Below="cbx_groups" />
+            <ListBox  Name="lbx_people" Width="300" Margin="0,5,0,0"  SelectionChanged="lbx_people_SelectionChanged" DisplayMemberPath="Name" RelativePanel.Below="txb_searchpeople"/>
+        </RelativePanel>
+
+            <ListView  Margin="0,0,0,30"  Grid.Row="0" Grid.Column="1" Name="lv_static" Visibility="Collapsed">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Name="sp_static">
+                            <TextBlock Name="tb_question" Text="{Binding questionText}" />
+                            <Charting:Chart  x:Name="ColumnChart" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                                 Width="300" Height="300">
+                                <Charting:ColumnSeries Name="chCo_static" ItemsSource="{Binding resultAnswers}" Margin="0" IndependentValuePath="text" Height="300" Width="300" DependentValuePath="amount"  IsSelectionEnabled="True" />
+                            </Charting:Chart>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
 
     </Grid>
 </Page>
+
+    
