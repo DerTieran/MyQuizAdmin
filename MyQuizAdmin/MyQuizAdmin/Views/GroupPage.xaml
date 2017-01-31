@@ -10,7 +10,7 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <controls:MasterDetailsView Foreground="Black"
+        <controls:MasterDetailsView x:Name="masterDetailsView" Foreground="Black"
                                 ItemsSource="{x:Bind Groups}"
                                 NoSelectionContent="Select an item to view">
             <controls:MasterDetailsView.MasterHeader>
@@ -21,34 +21,19 @@
             <controls:MasterDetailsView.ItemTemplate>
                 <DataTemplate x:DataType="models:Group">
                     <StackPanel Margin="0,8">
-                        <TextBox Text="{x:Bind title}" />
+                        <TextBlock Text="{x:Bind title}" />
                     </StackPanel>
                 </DataTemplate>
             </controls:MasterDetailsView.ItemTemplate>
             <controls:MasterDetailsView.DetailsTemplate>
                 <DataTemplate>
-                    <RelativePanel Margin="8">
-                        <Ellipse x:Name="FromEllipse"
-                     Width="50"
-                     Height="50"
-                     Fill="Gray" />
-                        <TextBlock Margin="12,10,0,0"
-                       VerticalAlignment="Center"
-                       RelativePanel.RightOf="FromEllipse"
-                       Style="{ThemeResource SubtitleTextBlockStyle}"
-                       Text="{Binding From}" />
-                        <TextBlock x:Name="SubjectLine"
-                       RelativePanel.Below="FromEllipse"
-                       Margin="0,12,0,0"
-                       Style="{ThemeResource BodyTextBlockStyle}"
-                       Text="{Binding Subject}" />
-                        <TextBlock x:Name="Body"
-                       Margin="0,12,0,0"
-                       RelativePanel.Below="SubjectLine"
-                       Style="{ThemeResource BodyTextBlockStyle}"
-                       Text="{Binding Body}"
-                       TextWrapping="Wrap" />
-                    </RelativePanel>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <local:GroupDetail Grid.Row="0" group="{Binding SelectedItem, ElementName=masterDetailsView}"></local:GroupDetail>
+                    </Grid>
                 </DataTemplate>
             </controls:MasterDetailsView.DetailsTemplate>
             <!--
