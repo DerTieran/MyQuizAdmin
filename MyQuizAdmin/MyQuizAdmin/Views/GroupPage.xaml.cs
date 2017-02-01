@@ -11,9 +11,10 @@ namespace MyQuizAdmin.Views
     /// </summary>
     public sealed partial class GroupPage : Page
     {
+        public List<Group> Groups { get; private set; }
+
         public GroupPage()
         {
-            
             Groups = new List<Group>
             {
                 new Group { id = 0, title = "g0" },
@@ -26,19 +27,5 @@ namespace MyQuizAdmin.Views
             this.InitializeComponent();
         }
 
-        public List<Group> Groups { get; private set; }
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-            /*
-            var propertyDesc = e.Parameter; as PropertyDescriptor;
-
-            if (propertyDesc != null)
-            {
-                DataContext = propertyDesc.Expando;
-            }
-            */
-        }
     }
 }

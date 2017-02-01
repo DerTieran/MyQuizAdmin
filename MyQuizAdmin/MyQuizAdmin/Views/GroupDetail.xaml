@@ -19,7 +19,7 @@
             <RowDefinition Height="40"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <TextBox x:Name="tb_title" Grid.Row="0" Text="tt+{Binding group.title, ElementName=userControl, Mode=TwoWay}"></TextBox>
+        <TextBox x:Name="tb_title" Grid.Row="0" Text="{Binding group.title, ElementName=userControl, Mode=TwoWay}"></TextBox>
 
         <ListBox Name="memberList" Grid.Row="1">
 

@@ -21,8 +21,12 @@ namespace MyQuizAdmin.Views
     {
         public Models.Group group
         {
-            get { return (Models.Group)GetValue(groupProperty); }
-            set { SetValue(groupProperty, value); }
+            get {
+                return (Models.Group)GetValue(groupProperty);
+            }
+            set {
+                SetValue(groupProperty, value);
+            }
         }
 
         // Using a DependencyProperty as the backing store for group.  This enables animation, styling, binding, etc...
