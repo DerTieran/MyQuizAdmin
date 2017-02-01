@@ -2,8 +2,8 @@
 {
     public class Group
     {
-        public int id;
-        public string title;
+        public int id { get; set; }
+        public string title { get; set; }
 
     }
 }
