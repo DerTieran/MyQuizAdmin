@@ -21,7 +21,7 @@ namespace MyQuizAdmin.Models
             get { return notifyText; }
         }
 
-        public ObservableCollection<string> awnsers { get; set; } = new ObservableCollection<string>();
+        public ObservableCollection<Answer> awnsers { get; set; } = new ObservableCollection<Answer>();
 
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -35,7 +35,7 @@ namespace MyQuizAdmin.Views
         private void lbx_question_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var question = lbx_question.SelectedItem as Question;
-            if (lbx_question.SelectedItem!=null)
+            if (lbx_question.SelectedItem != null)
                 lbx_answer.ItemsSource = question.awnsers;
         }
         /*******************************
@@ -49,10 +49,14 @@ namespace MyQuizAdmin.Views
 
         private void bt_questionlistAdd_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            Questionnaire newQuestionnaire = new Questionnaire();
-            newQuestionnaire.name = tbx_questionlist.Text;
-            questionlist.Add(newQuestionnaire);
-            cbx_questionListEdit.SelectedItem = newQuestionnaire;
+            if (tbx_questionlist.Text!="")
+            {
+                Questionnaire newQuestionnaire = new Questionnaire();
+                newQuestionnaire.name = tbx_questionlist.Text;
+                questionlist.Add(newQuestionnaire);
+                cbx_questionListEdit.SelectedItem = newQuestionnaire;
+            }
+
         }
         private void bt_questionDel_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
@@ -68,22 +72,37 @@ namespace MyQuizAdmin.Views
             Question newQuestion = new Question();
             newQuestion.text = "neue Frage";
             if (questionaire != null)
+            {
                 questionaire.questions.Add(newQuestion);
+                lbx_question.ItemsSource = questionaire.questions;
+            }
 
-            lbx_question.ItemsSource = questionaire.questions;
         }
 
         private void bt_answerDel_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             var selectetQuestion = lbx_question.SelectedItem as Question;
-            var toRemove = lbx_answer.SelectedItem as string;
+            var toRemove = lbx_answer.SelectedItem as Answer;
             selectetQuestion.awnsers.Remove(toRemove);
         }
 
         private void bt_answerAdd_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             var selectetQuestion = lbx_question.SelectedItem as Question;
-            selectetQuestion.awnsers.Add(tbx_answer.Text);
+            if (lbx_question.SelectedItem!=null && tbx_answer.Text!= "")
+            {
+                Answer newAnswer = new Answer();
+                newAnswer.text = tbx_answer.Text;
+                selectetQuestion.awnsers.Add(newAnswer);
+            }
+        }
+
+        private void ts_typ_Toggled(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            if (ts_typ.IsOn)
+                tbt_result.IsEnabled = false;
+            else
+                tbt_result.IsEnabled = true;
         }
     }
 }
