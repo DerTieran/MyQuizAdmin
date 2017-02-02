@@ -96,6 +96,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\GroupResponse.cs" />
     <Compile Include="Controls\LoginDialog.xaml.cs">
       <DependentUpon>LoginDialog.xaml</DependentUpon>
     </Compile>
@@ -111,6 +112,8 @@
     <Compile Include="NavMenuItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Request.cs" />
+    <Compile Include="Result.cs" />
+    <Compile Include="Topic.cs" />
     <Compile Include="Views\GroupPage.xaml.cs">
       <DependentUpon>GroupPage.xaml</DependentUpon>
     </Compile>

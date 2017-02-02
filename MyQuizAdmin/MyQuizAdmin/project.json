@@ -2,6 +2,7 @@
   "dependencies": {
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0",
     "Newtonsoft.Json": "9.0.1",
+    "WinRTXamlToolkit.Controls.DataVisualization.UWP": "2.0.0",
     "Microsoft.Toolkit.Uwp.UI": "1.2.0",
     "Microsoft.Toolkit.Uwp.UI.Controls": "1.2.0"
   },
