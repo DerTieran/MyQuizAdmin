@@ -17,11 +17,11 @@ namespace MyQuizAdmin.Views
         {
             Groups = new List<Group>
             {
-                new Group { id = 0, title = "g0" },
-                new Group { id = 1, title = "g1" },
-                new Group { id = 2, title = "g2" },
-                new Group { id = 3, title = "g3" },
-                new Group { id = 4, title = "g4" }
+                new Group { Id = 0, Title = "g0" },
+                new Group { Id = 1, Title = "g1" },
+                new Group { Id = 2, Title = "g2" },
+                new Group { Id = 3, Title = "g3" },
+                new Group { Id = 4, Title = "g4" }
             };
             
             this.InitializeComponent();
