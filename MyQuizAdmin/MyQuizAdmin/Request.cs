@@ -71,19 +71,19 @@ namespace MyQuizAdmin
             return result;
         }
 
-        public async Task <List<GroupResponse>> GetGroups()
+        public async Task <List<Group>> GetGroups()
         {
-            List<GroupResponse> result = await GET<List<GroupResponse>>("/api/groups");
+            List<Group> result = await GET<List<Group>>("/api/groups");
             return result;
         }
 
-        public async Task <List<Topic>> getTopicsForGroup(GroupResponse group)
+        public async Task <List<SingleTopic>> getTopicsForGroup(Group group)
         {
-            List<Topic> result = await GET<List<Topic>>("/api/groups/" + group.Id + "/topics");          
+            List<SingleTopic> result = await GET<List<SingleTopic>>("/api/groups/" + group.Id + "/topics");          
             return result;
         }
 
-        public async Task <List<Result>> getResultForTopicInGroup(Topic topic, GroupResponse group)
+        public async Task <List<Result>> getResultForTopicInGroup(SingleTopic topic, Group group)
         {
             //Result result = await GET<Result>("/api/groups/" + group.id + "/topics/" + topic.id + "/results");
             List<Result.Answer> resultAnswers = new List<Result.Answer>();
@@ -96,7 +96,7 @@ namespace MyQuizAdmin
             return result;
         }
 
-        public async Task<List<Result>> getResultForGroup(GroupResponse group)
+        public async Task<List<Result>> getResultForGroup(Group group)
         {
             //Result result = await GET<Result>("/api/groups/" + group.id + "/results");
             List<Result.Answer> resultAnswers = new List<Result.Answer>();

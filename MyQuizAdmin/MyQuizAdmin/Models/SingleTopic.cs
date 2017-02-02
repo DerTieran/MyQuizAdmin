@@ -1,6 +1,6 @@
-﻿namespace MyQuizAdmin
+﻿namespace MyQuizAdmin.Models
 {
-    public class Topic
+    public class SingleTopic
     {
         public long Id { get; set; }
         public string String { get; set; }
