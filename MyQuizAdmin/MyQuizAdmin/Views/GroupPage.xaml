@@ -14,10 +14,13 @@
                                 ItemsSource="{x:Bind Groups}"
                                 NoSelectionContent="Select an item to view">
             <controls:MasterDetailsView.MasterHeader>
-                <StackPanel Orientation="Horizontal">
-                    <Button Content="+"></Button>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
+                    <TextBlock HorizontalAlignment="Stretch" Padding="10">Gruppen</TextBlock>
+                    <Button HorizontalAlignment="Right" Content="+" Margin="5"></Button>
+                    <Button HorizontalAlignment="Right" Content="-"></Button>
                 </StackPanel>
             </controls:MasterDetailsView.MasterHeader>
+        
             <controls:MasterDetailsView.ItemTemplate>
                 <DataTemplate x:DataType="models:Group">
                     <StackPanel Margin="0,8">
@@ -26,13 +29,13 @@
                 </DataTemplate>
             </controls:MasterDetailsView.ItemTemplate>
             <controls:MasterDetailsView.DetailsTemplate>
-                <DataTemplate>
+                <DataTemplate x:DataType="models:Group">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
 
-                        <local:GroupDetail Grid.Row="0" group="{Binding SelectedItem, ElementName=masterDetailsView}"></local:GroupDetail>
+                        <local:GroupDetail Grid.Row="0" group="{Binding}"></local:GroupDetail>
                     </Grid>
                 </DataTemplate>
             </controls:MasterDetailsView.DetailsTemplate>
