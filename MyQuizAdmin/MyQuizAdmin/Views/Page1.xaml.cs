@@ -49,8 +49,10 @@ namespace MyQuizAdmin.Views
 
         private async void lbx_people_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            var SelectedGroup = cbx_groups.SelectedItem as GroupResponse;
+            var SelectedTopic = lbx_people.SelectedItem as Topic;
             lv_static.Visibility = Windows.UI.Xaml.Visibility.Visible;
-            lv_static.ItemsSource = await request.getResultForTopicInGroup(new Topic(), new Group());
+            lv_static.ItemsSource = await request.getResultForTopicInGroup(SelectedTopic, SelectedGroup);
         }
     }
 }

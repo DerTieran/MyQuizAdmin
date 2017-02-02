@@ -83,7 +83,7 @@ namespace MyQuizAdmin
             return result;
         }
 
-        public async Task <List<Result>> getResultForTopicInGroup(Topic topic, Group group)
+        public async Task <List<Result>> getResultForTopicInGroup(Topic topic, GroupResponse group)
         {
             //Result result = await GET<Result>("/api/groups/" + group.id + "/topics/" + topic.id + "/results");
             List<Result.Answer> resultAnswers = new List<Result.Answer>();
@@ -96,7 +96,7 @@ namespace MyQuizAdmin
             return result;
         }
 
-        public async Task<List<Result>> getResultForGroup(Group group)
+        public async Task<List<Result>> getResultForGroup(GroupResponse group)
         {
             //Result result = await GET<Result>("/api/groups/" + group.id + "/results");
             List<Result.Answer> resultAnswers = new List<Result.Answer>();
@@ -108,16 +108,5 @@ namespace MyQuizAdmin
             result.Add(new Result { questionText = "Wie war der Schnabeltier", resultAnswers = resultAnswers });
             return result;
         }
-
-        //public async Task List<PeopleResponse> GetPeople()
-        //{
-        //    PeopleResponse result = await GET<PeopleResponse>("/api/Group");
-        //    return result;
-        //}
-        //public async Task List<QuestionResponse> GetQuestionsAndAnswers()
-        //{
-        //    QuestionResponse result = await GET<QuestionResponse>("/api/Group");
-        //    return result;
-        //}
     }
 }
