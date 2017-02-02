@@ -40,7 +40,7 @@ namespace MyQuizAdmin.Views
 
             if (lv_static.ItemsSource == null)
             {
-                lv_static.ItemsSource = await request.getResultForGroup(SelectedGroup);
+                lv_static.ItemsSource = await request.getGivenAnswersForGroup(SelectedGroup);
             }
         }
 
@@ -58,7 +58,7 @@ namespace MyQuizAdmin.Views
         {
             var SelectedGroup = cbx_groups.SelectedItem as Group;
             var SelectedTopic = lbx_people.SelectedItem as SingleTopic;
-            lv_static.ItemsSource = await request.getResultForTopicInGroup(SelectedTopic, SelectedGroup);
+            lv_static.ItemsSource = await request.getGivenAnswersForTopicInGroup(SelectedTopic, SelectedGroup);
         }
     }
 }
