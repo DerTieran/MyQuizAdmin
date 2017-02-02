@@ -66,12 +66,7 @@ namespace MyQuizAdmin
 
         public async Task <List<Topic>> getTopicsForGroup(GroupResponse group)
         {
-            //Topic result = await GET<Topic>("/api/groups/" + group.id + "/topics");
-            List<Topic> result = new List<Topic>();
-            result.Add(new Topic { Id = 1, Name="Peter" });
-            result.Add(new Topic { Id = 2, Name = "Klaus" });
-            result.Add(new Topic { Id = 3, Name = "Heinz" });
-            result.Add(new Topic { Id = 4, Name = "Poket" });
+            List<Topic> result = await GET<List<Topic>>("/api/groups/" + group.Id + "/topics");          
             return result;
         }
 
@@ -84,7 +79,20 @@ namespace MyQuizAdmin
             resultAnswers.Add(new Result.Answer { amount = 20, text = "schlecht" });
             List<Result> result = new List<Result>();
             result.Add(new Result { questionText = "Wie war das Wetter", resultAnswers = resultAnswers });
-            result.Add(new Result { questionText = "Wie war der Otter", resultAnswers = resultAnswers });
+            result.Add(new Result { questionText = "Wie war der Schnabeltier", resultAnswers = resultAnswers });
+            return result;
+        }
+
+        public async Task<List<Result>> getResultForGroup(Group group)
+        {
+            //Result result = await GET<Result>("/api/groups/" + group.id + "/results");
+            List<Result.Answer> resultAnswers = new List<Result.Answer>();
+            resultAnswers.Add(new Result.Answer { amount = 50, text = "gut" });
+            resultAnswers.Add(new Result.Answer { amount = 10, text = " sehr gut" });
+            resultAnswers.Add(new Result.Answer { amount = 20, text = "schlecht" });
+            List<Result> result = new List<Result>();
+            result.Add(new Result { questionText = "Wie war das Wetter", resultAnswers = resultAnswers });
+            result.Add(new Result { questionText = "Wie war der Schnabeltier", resultAnswers = resultAnswers });
             return result;
         }
 
