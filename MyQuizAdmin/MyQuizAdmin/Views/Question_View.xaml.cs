@@ -11,7 +11,7 @@ namespace MyQuizAdmin.Views
     /// </summary>
     public sealed partial class Question_View : Page
     {
-        public ObservableCollection<Questionnaire> questionlist = new ObservableCollection<Questionnaire>();
+        public ObservableCollection<QuestionBlock> questionlist = new ObservableCollection<QuestionBlock>();
         public Request request = new Request();
 
         public Question_View()
@@ -28,7 +28,7 @@ namespace MyQuizAdmin.Views
 
         private async void cbx_questionListEdit_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var selectetQuestionnaire = cbx_questionListEdit.SelectedItem as Questionnaire;
+            var selectetQuestionnaire = cbx_questionListEdit.SelectedItem as QuestionBlock;
 
         }
 
@@ -43,7 +43,7 @@ namespace MyQuizAdmin.Views
          *******************************/
         private void bt_questionlistDel_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            var toRemove = cbx_questionListEdit.SelectedItem as Questionnaire;
+            var toRemove = cbx_questionListEdit.SelectedItem as QuestionBlock;
             questionlist.Remove(toRemove);
         }
 
@@ -51,8 +51,8 @@ namespace MyQuizAdmin.Views
         {
             if (tbx_questionlist.Text!="")
             {
-                Questionnaire newQuestionnaire = new Questionnaire();
-                newQuestionnaire.name = tbx_questionlist.Text;
+                QuestionBlock newQuestionnaire = new QuestionBlock();
+                newQuestionnaire.title = tbx_questionlist.Text;
                 questionlist.Add(newQuestionnaire);
                 cbx_questionListEdit.SelectedItem = newQuestionnaire;
             }
@@ -60,21 +60,21 @@ namespace MyQuizAdmin.Views
         }
         private void bt_questionDel_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            var questionaire = cbx_questionListEdit.SelectedItem as Questionnaire;
+            var questionaire = cbx_questionListEdit.SelectedItem as QuestionBlock;
             var toRemove = lbx_question.SelectedItem as Question;
-            questionaire.questions.Remove(toRemove);
+            questionaire.questionList.Remove(toRemove);
         }
 
         private void bt_questionAdd_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
 
-            var questionaire = cbx_questionListEdit.SelectedItem as Questionnaire;
+            var questionaire = cbx_questionListEdit.SelectedItem as QuestionBlock;
             Question newQuestion = new Question();
             newQuestion.text = "neue Frage";
             if (questionaire != null)
             {
-                questionaire.questions.Add(newQuestion);
-                lbx_question.ItemsSource = questionaire.questions;
+                questionaire.questionList.Add(newQuestion);
+                lbx_question.ItemsSource = questionaire.questionList;
             }
 
         }

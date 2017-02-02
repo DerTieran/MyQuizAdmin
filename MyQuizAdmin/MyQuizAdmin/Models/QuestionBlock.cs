@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace MyQuizAdmin.Models
 {
-    public class Questionnaire
+    public class QuestionBlock
     {
         public int id { get; set; }
-        public string name { get; set; }
+        public string title { get; set; }
 
-        public ObservableCollection<Question> questions { get; set; } = new ObservableCollection<Question>();
+        public ObservableCollection<Question> questionList { get; set; }
     }
 }

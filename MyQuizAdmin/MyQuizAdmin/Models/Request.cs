@@ -65,17 +65,22 @@ namespace MyQuizAdmin.Models
         }
 
 
-        public async Task<ObservableCollection<Questionnaire>> questionnaireRequest()
+        public async Task<ObservableCollection<QuestionBlock>> questionnaireRequest()
         {
-            //ObservableCollection<Questionnaire> result = await GET<ObservableCollection<Questionnaire>>("api/questionLists");
+
+            ObservableCollection<QuestionBlock> result = new ObservableCollection<QuestionBlock>();
+            result = await GET<ObservableCollection<QuestionBlock>>("api/questionBlock/");
 
             /*****  Testdaten  *****/
-            ObservableCollection<Questionnaire> result = new ObservableCollection<Questionnaire>();
-            Questionnaire testQuestionnaire = new Questionnaire();
-            testQuestionnaire.name = "Testliste";
-            Request request = new Request();
-            testQuestionnaire.questions = await request.questionRequest();
-            result.Add(testQuestionnaire);
+            if (result == null)
+            {
+                QuestionBlock testQuestionnaire = new QuestionBlock();
+                testQuestionnaire.title = "Testliste";
+                Request request = new Request();
+                testQuestionnaire.questionList = await request.questionRequest();
+                result.Add(testQuestionnaire);
+            }
+
 
             return result;
         }

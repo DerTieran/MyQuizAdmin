@@ -13,8 +13,8 @@ namespace MyQuizAdmin.Models
         private string notifyText { get; set; }
 
         public int id { get; set; }
-        public bool isVote { get; set; }
-        public bool isSingleChoice { get; set; }
+        public string isVote { get; set; }
+        public string isSingleChoice { get; set; }
         public string text
         {
             set { notifyText = value; OnPropertyChanged("text");}
