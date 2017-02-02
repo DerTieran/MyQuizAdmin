@@ -31,7 +31,7 @@ namespace MyQuizAdmin
         private async Task<T> GET<T>(string path)
         {
             HttpClient client = getClient();
-            
+     
             T result = default(T);
             HttpResponseMessage response = await client.GetAsync(path);
             if (response.IsSuccessStatusCode)
@@ -64,10 +64,54 @@ namespace MyQuizAdmin
             HttpResponseMessage response = await client.DeleteAsync(path);
             return response.StatusCode;
         }
-
+      
         public async Task<RegistrationResponse> register(RegistrationData auth)
         {
             RegistrationResponse result = await POST<RegistrationResponse>("/api/devices", auth);
+            return result;
+        }
+
+        public async Task <List<Group>> GetGroups()
+        {
+            List<Group> result = await GET<List<Group>>("/api/groups");
+            return result;
+        }
+
+        public async Task <List<SingleTopic>> getTopicsForGroup(Group group)
+        {
+            List<SingleTopic> result = await GET<List<SingleTopic>>("/api/groups/" + group.Id + "/topics");          
+            return result;
+        }
+
+        Random rnd = new Random();
+        private Result randResult()
+        {
+            List<Result.Answer> resultAnswers = new List<Result.Answer>();
+            resultAnswers.Add(new Result.Answer { amount = rnd.Next(1, 50), text = "A" });
+            resultAnswers.Add(new Result.Answer { amount = rnd.Next(1, 50), text = "B" });
+            resultAnswers.Add(new Result.Answer { amount = rnd.Next(1, 50), text = "C" });
+            return new Result { questionText = "A, B oder C", resultAnswers = resultAnswers };
+        }
+
+        public async Task <List<Result>> getResultForTopicInGroup(SingleTopic topic, Group group)
+        {
+            //Result result = await GET<Result>("/api/groups/" + group.id + "/topics/" + topic.id + "/results");
+            List<Result> result = new List<Result>();
+            result.Add(randResult());
+            result.Add(randResult());
+            result.Add(randResult());
+            result.Add(randResult());
+            return result;
+        }
+
+        public async Task<List<Result>> getResultForGroup(Group group)
+        {
+            //Result result = await GET<Result>("/api/groups/" + group.id + "/results");
+            List<Result> result = new List<Result>();
+            result.Add(randResult());
+            result.Add(randResult());
+            result.Add(randResult());
+            result.Add(randResult());
             return result;
         }
     }

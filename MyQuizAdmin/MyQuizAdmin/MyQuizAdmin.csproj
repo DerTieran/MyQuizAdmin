@@ -96,6 +96,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Group.cs" />
     <Compile Include="Controls\LoginDialog.xaml.cs">
       <DependentUpon>LoginDialog.xaml</DependentUpon>
     </Compile>
@@ -106,11 +107,12 @@
     <Compile Include="Controls\PageHeader.xaml.cs">
       <DependentUpon>PageHeader.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\GroupModel.cs" />
     <Compile Include="Models\Registration.cs" />
     <Compile Include="NavMenuItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Request.cs" />
+    <Compile Include="Models\Result.cs" />
+    <Compile Include="Models\SingleTopic.cs" />
     <Compile Include="Views\GroupDetail.xaml.cs">
       <DependentUpon>GroupDetail.xaml</DependentUpon>
     </Compile>
