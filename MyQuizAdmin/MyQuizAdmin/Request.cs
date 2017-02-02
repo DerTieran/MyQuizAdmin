@@ -71,19 +71,19 @@ namespace MyQuizAdmin
             return result;
         }
 
-        public async Task <List<GroupResponse>> GetGroups()
+        public async Task <List<Group>> GetGroups()
         {
-            List<GroupResponse> result = await GET<List<GroupResponse>>("/api/groups");
+            List<Group> result = await GET<List<Group>>("/api/groups");
             return result;
         }
 
-        public async Task <List<Topic>> getTopicsForGroup(GroupResponse group)
+        public async Task <List<SingleTopic>> getTopicsForGroup(Group group)
         {
-            List<Topic> result = await GET<List<Topic>>("/api/groups/" + group.Id + "/topics");          
+            List<SingleTopic> result = await GET<List<SingleTopic>>("/api/groups/" + group.Id + "/topics");          
             return result;
         }
 
-        public async Task <List<Result>> getResultForTopicInGroup(Topic topic, GroupResponse group)
+        public async Task <List<Result>> getResultForTopicInGroup(SingleTopic topic, Group group)
         {
             //Result result = await GET<Result>("/api/groups/" + group.id + "/topics/" + topic.id + "/results");
             List<Result.Answer> resultAnswers = new List<Result.Answer>();
@@ -96,16 +96,17 @@ namespace MyQuizAdmin
             return result;
         }
 
-        public async Task<List<Result>> getResultForGroup(GroupResponse group)
+        public async Task<List<Result>> getResultForGroup(Group group)
         {
             //Result result = await GET<Result>("/api/groups/" + group.id + "/results");
             List<Result.Answer> resultAnswers = new List<Result.Answer>();
-            resultAnswers.Add(new Result.Answer { amount = 50, text = "gut" });
-            resultAnswers.Add(new Result.Answer { amount = 10, text = " sehr gut" });
-            resultAnswers.Add(new Result.Answer { amount = 20, text = "schlecht" });
+            Random rnd = new Random();
+            resultAnswers.Add(new Result.Answer { amount = rnd.Next(1,50), text = "gut" });
+            resultAnswers.Add(new Result.Answer { amount = rnd.Next(1, 50), text = " sehr gut" });
+            resultAnswers.Add(new Result.Answer { amount = rnd.Next(1, 50), text = "schlecht" });
             List<Result> result = new List<Result>();
-            result.Add(new Result { questionText = "Wie war das Wetter", resultAnswers = resultAnswers });
-            result.Add(new Result { questionText = "Wie war der Schnabeltier", resultAnswers = resultAnswers });
+            result.Add(new Result { questionText = "Wie war die Vorlesung", resultAnswers = resultAnswers });
+            result.Add(new Result { questionText = "Wie war die Präsentaion", resultAnswers = resultAnswers });
             return result;
         }
     }

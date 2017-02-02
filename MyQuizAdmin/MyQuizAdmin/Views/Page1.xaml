@@ -55,7 +55,7 @@
             <TextBox Margin="0,10,0,0" Name="txb_searchpeople" Width="400" Height="30" SelectionChanged="txb_searchpeople_SelectionChanged" RelativePanel.Below="cbx_groups" />
             <ListBox  Name="lbx_people" Width="400" Margin="0,5,0,0"  SelectionChanged="lbx_people_SelectionChanged" DisplayMemberPath="String" RelativePanel.Below="txb_searchpeople"/>
         </RelativePanel>
-        <ListView  Margin="0,0,0,30"  Grid.Row="0" Grid.Column="1" Name="lv_static" Visibility="Collapsed">
+        <ListView  Margin="0,0,0,30"  Grid.Row="0" Grid.Column="1" Name="lv_static">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Name="sp_static">

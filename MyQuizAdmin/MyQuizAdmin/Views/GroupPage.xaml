@@ -21,7 +21,7 @@
             <controls:MasterDetailsView.ItemTemplate>
                 <DataTemplate x:DataType="models:Group">
                     <StackPanel Margin="0,8">
-                        <TextBox Text="{x:Bind title}" />
+                        <TextBox Text="{x:Bind Title}" />
                     </StackPanel>
                 </DataTemplate>
             </controls:MasterDetailsView.ItemTemplate>

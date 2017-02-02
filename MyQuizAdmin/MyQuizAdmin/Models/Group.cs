@@ -1,6 +1,6 @@
-﻿namespace MyQuizAdmin
+﻿namespace MyQuizAdmin.Models
 {
-    public class GroupResponse
+    public class Group
     {       
         public long Id { get; set; }
         public string Title { get; set; }
