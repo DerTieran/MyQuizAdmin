@@ -13,8 +13,7 @@ namespace MyQuizAdmin.Views
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class Page1 : Page
-    {
-        
+    {       
         bool LayoutUpdateFlag = true;
         Request request = new Request();
 
@@ -34,7 +33,15 @@ namespace MyQuizAdmin.Views
             var SelectedGroup = cbx_groups.SelectedItem as GroupResponse;
             List<Topic> topicResponList = await request.getTopicsForGroup(SelectedGroup);
             lbx_people.ItemsSource = topicResponList;
+            if (lv_static.ItemsSource != null )
+            {
+                lv_static.ItemsSource = null;
+            }
 
+            if (lv_static.ItemsSource == null)
+            {
+                lv_static.ItemsSource = await request.getResultForGroup(SelectedGroup);
+            }
         }
 
         private async void txb_searchpeople_SelectionChanged(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -51,7 +58,6 @@ namespace MyQuizAdmin.Views
         {
             var SelectedGroup = cbx_groups.SelectedItem as GroupResponse;
             var SelectedTopic = lbx_people.SelectedItem as Topic;
-            lv_static.Visibility = Windows.UI.Xaml.Visibility.Visible;
             lv_static.ItemsSource = await request.getResultForTopicInGroup(SelectedTopic, SelectedGroup);
         }
     }

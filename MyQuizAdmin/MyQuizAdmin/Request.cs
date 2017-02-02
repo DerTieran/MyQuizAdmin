@@ -100,12 +100,13 @@ namespace MyQuizAdmin
         {
             //Result result = await GET<Result>("/api/groups/" + group.id + "/results");
             List<Result.Answer> resultAnswers = new List<Result.Answer>();
-            resultAnswers.Add(new Result.Answer { amount = 50, text = "gut" });
-            resultAnswers.Add(new Result.Answer { amount = 10, text = " sehr gut" });
-            resultAnswers.Add(new Result.Answer { amount = 20, text = "schlecht" });
+            Random rnd = new Random();
+            resultAnswers.Add(new Result.Answer { amount = rnd.Next(1,50), text = "gut" });
+            resultAnswers.Add(new Result.Answer { amount = rnd.Next(1, 50), text = " sehr gut" });
+            resultAnswers.Add(new Result.Answer { amount = rnd.Next(1, 50), text = "schlecht" });
             List<Result> result = new List<Result>();
-            result.Add(new Result { questionText = "Wie war das Wetter", resultAnswers = resultAnswers });
-            result.Add(new Result { questionText = "Wie war der Schnabeltier", resultAnswers = resultAnswers });
+            result.Add(new Result { questionText = "Wie war die Vorlesung", resultAnswers = resultAnswers });
+            result.Add(new Result { questionText = "Wie war die Präsentaion", resultAnswers = resultAnswers });
             return result;
         }
     }
