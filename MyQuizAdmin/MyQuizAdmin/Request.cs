@@ -14,13 +14,24 @@ namespace MyQuizAdmin
     class Request
     {
         private const string BaseAddress = "http://h2653223.stratoserver.net";
-
-        private async Task<T> GET<T>(string path)
+        private HttpClient getClient()
         {
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri(BaseAddress);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
+            string deviceID = (string)Windows.Storage.ApplicationData.Current.RoamingSettings.Values["deviceID"];
+            if (deviceID != null && deviceID.Length > 0)
+            {
+                client.DefaultRequestHeaders.Add("DeviceID", deviceID);
+            }
+            return client;
+        }
+
+        private async Task<T> GET<T>(string path)
+        {
+            HttpClient client = getClient();
+     
             T result = default(T);
             HttpResponseMessage response = await client.GetAsync(path);
             if (response.IsSuccessStatusCode)
@@ -33,9 +44,7 @@ namespace MyQuizAdmin
 
         private async Task<T> POST<T>(string path, object data)
         {
-            HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri(BaseAddress);
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpClient client = getClient();
 
             T result = default(T);
             var content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
@@ -50,12 +59,16 @@ namespace MyQuizAdmin
 
         private async Task<HttpStatusCode> DELETE(string path)
         {
-            HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri(BaseAddress);
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpClient client = getClient();
 
             HttpResponseMessage response = await client.DeleteAsync(path);
             return response.StatusCode;
+        }
+      
+        public async Task<RegistrationResponse> register(RegistrationData auth)
+        {
+            RegistrationResponse result = await POST<RegistrationResponse>("/api/devices", auth);
+            return result;
         }
 
         public async Task <List<GroupResponse>> GetGroups()

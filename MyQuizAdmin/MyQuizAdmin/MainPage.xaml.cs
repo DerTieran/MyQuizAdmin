@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using MyQuizAdmin.Controls;
 using MyQuizAdmin.Views;
+using System.Threading.Tasks;
 
 namespace MyQuizAdmin
 {
@@ -40,8 +41,8 @@ namespace MyQuizAdmin
                 new NavMenuItem()
                 {
                     Symbol = Symbol.Favorite,
-                    Label = "Page3",
-                    DestinationPage = typeof(Views.Page3)
+                    Label = "GroupView",
+                    DestinationPage = typeof(Views.GroupPage)
                 }
             });
 
@@ -56,14 +57,25 @@ namespace MyQuizAdmin
         {
             this.InitializeComponent();
 
+            string deviceID = (string)Windows.Storage.ApplicationData.Current.RoamingSettings.Values["deviceID"];
+            if (deviceID == null || deviceID.Length <= 0)
+            {
+                ShowLoginDialog();
+            }
+
             this.Loaded += (sender, args) =>
             {
                 Current = this;
-
                 this.TogglePaneButton.Focus(FocusState.Programmatic);
             };
 
             NavMenuList.ItemsSource = navlist;
+        }
+
+        private async void ShowLoginDialog()
+        {
+            LoginDialog loginDialog = new LoginDialog();
+            await loginDialog.ShowAsync();
         }
 
         public Frame AppFrame { get { return this.frame; } }
@@ -124,7 +136,7 @@ namespace MyQuizAdmin
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="listViewItem"></param>
-        private async void NavMenuList_ItemInvoked(object sender, ListViewItem listViewItem)
+        private void NavMenuList_ItemInvoked(object sender, ListViewItem listViewItem)
         {
             var item = (NavMenuItem)((NavMenuListView)sender).ItemFromContainer(listViewItem);
 

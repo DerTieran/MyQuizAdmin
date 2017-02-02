@@ -53,11 +53,24 @@
                         <AdaptiveTrigger MinWindowWidth="0" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="RootSplitView.DisplayMode" Value="Overlay"/>
+                        <Setter Target="RootSplitView.DisplayMode" Value="CompactOverlay"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
+
+        <Popup x:Name="ppup" IsOpen="True" IsLightDismissEnabled="True"  
+     Width="320" HorizontalAlignment="Left">
+            <Popup.ChildTransitions>
+                <TransitionCollection>
+                    <!--<EdgeUIThemeTransition Edge="Left" />-->
+                    <PaneThemeTransition Edge="Left" />
+                </TransitionCollection>
+            </Popup.ChildTransitions>
+            <Grid Width="380" Height="{Binding ElementName=flyoutPane, Path=Height}"  Background="{ThemeResource FlyoutBackgroundThemeBrush}" >
+                <TextBlock Text="Grid contents here" />
+            </Grid>
+        </Popup>
 
         <!-- Top-level navigation menu + app content -->
         <SplitView x:Name="RootSplitView"
