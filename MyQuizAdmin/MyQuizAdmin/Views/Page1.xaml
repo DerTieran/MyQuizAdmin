@@ -5,12 +5,77 @@
     xmlns:local="using:MyQuizAdmin.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Charting="using:WinRTXamlToolkit.Controls.DataVisualization.Charting"
+    Loaded="Page_Loaded"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    <Grid Name="g_staticPag" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
           EntranceNavigationTransitionInfo.IsTargetElement="True">
-
-        <TextBlock Style="{ThemeResource TitleTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Page 1 Content"/>
-
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="Wide">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="750"></AdaptiveTrigger>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="sp_settings.(Grid.Column)" Value="0" />
+                        <Setter Target="lv_static.(Grid.Column)" Value="1" />
+                        <Setter Target="lv_static.(Grid.Row)" Value="0" />
+                        <Setter Target="sp_settings.(Grid.Row)" Value="0" />
+                        <Setter Target="lv_static.Margin" Value="100,0,0,20"/>
+                        <Setter Target="topHead.Height" Value="900"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="small">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"></AdaptiveTrigger>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="sp_settings.(Grid.Column)" Value="0" />
+                        <Setter Target="sp_settings.(Grid.Row)" Value="0" />
+                        <Setter Target="lv_static.(Grid.Column)" Value="0" />
+                        <Setter Target="lv_static.(Grid.Row)" Value="1" />
+                        <Setter Target="lv_static.Margin" Value="60,20,0,20"/>
+                        <Setter Target="sp_settings.Margin" Value="60,0,0,0" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition x:Name="topHead" />
+            <RowDefinition x:Name="downHead" />
+        </Grid.RowDefinitions>
+        <RelativePanel Name="sp_settings" Grid.Column="0" Grid.Row="0">
+            <TextBlock Name="txb_group" Text="Gruppen" />
+            <ComboBox Name="cbx_groups" Width="400" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="30" SelectionChanged="cbx_groups_SelectionChanged" DisplayMemberPath="Title" RelativePanel.Below="txb_group"/>
+            <TextBox Margin="0,10,0,0" Name="txb_searchpeople" Width="400" Height="30" SelectionChanged="txb_searchpeople_SelectionChanged" RelativePanel.Below="cbx_groups" />
+            <ListBox  Name="lbx_people" Width="400" Margin="0,5,0,0"  SelectionChanged="lbx_people_SelectionChanged" DisplayMemberPath="String" RelativePanel.Below="txb_searchpeople"/>
+        </RelativePanel>
+        <ListView  Margin="0,0,0,30"  Grid.Row="0" Grid.Column="1" Name="lv_static">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Name="sp_static">
+                        <TextBlock Name="tb_question" Text="{Binding questionText}" />
+                        <Charting:Chart  x:Name="ColumnChart" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                                 Width="400" Height="400">
+                            <Charting:ColumnSeries Name="chCo_static" Title="Antworten" ItemsSource="{Binding resultAnswers}" Margin="0" IndependentValuePath="text" Height="300" Width="300" DependentValuePath="amount"  IsSelectionEnabled="True">
+                                <Charting:ColumnSeries.LegendItemStyle>
+                                    <Style TargetType="Control">
+                                        <Setter Property="Width" Value="0" />
+                                        <Setter Property="Height" Value="0" />
+                                    </Style>
+                                </Charting:ColumnSeries.LegendItemStyle>
+                            </Charting:ColumnSeries>
+                        </Charting:Chart>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Page>
+
+    
