@@ -103,7 +103,7 @@
     <Compile Include="Controls\PageHeader.xaml.cs">
       <DependentUpon>PageHeader.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\Answer.cs" />
+    <Compile Include="Models\AnswerOption.cs" />
     <Compile Include="Models\Request.cs" />
     <Compile Include="NavMenuItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

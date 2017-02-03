@@ -72,14 +72,14 @@ namespace MyQuizAdmin.Models
             result = await GET<ObservableCollection<QuestionBlock>>("api/questionBlock/");
 
             /*****  Testdaten  *****/
-            if (result == null)
-            {
-                QuestionBlock testQuestionnaire = new QuestionBlock();
-                testQuestionnaire.title = "Testliste";
-                Request request = new Request();
-                testQuestionnaire.questionList = await request.questionRequest();
-                result.Add(testQuestionnaire);
-            }
+            //if (result == null)
+            //{
+            //    QuestionBlock testQuestionnaire = new QuestionBlock();
+            //    testQuestionnaire.title = "Testliste";
+            //    Request request = new Request();
+            //    testQuestionnaire.questionList = await request.questionRequest();
+            //    result.Add(testQuestionnaire);
+            //}
 
 
             return result;

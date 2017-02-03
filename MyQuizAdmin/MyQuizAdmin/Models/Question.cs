@@ -13,15 +13,15 @@ namespace MyQuizAdmin.Models
         private string notifyText { get; set; }
 
         public int id { get; set; }
-        public string isVote { get; set; }
-        public string isSingleChoice { get; set; }
+        public string Category { get; set; }
+        public string MultipleChoice { get; set; }
         public string text
         {
             set { notifyText = value; OnPropertyChanged("text");}
             get { return notifyText; }
         }
 
-        public ObservableCollection<Answer> awnsers { get; set; } = new ObservableCollection<Answer>();
+        public ObservableCollection<AnswerOption> answerOption { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

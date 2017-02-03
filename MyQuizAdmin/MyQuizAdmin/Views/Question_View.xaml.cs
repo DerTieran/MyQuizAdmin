@@ -36,7 +36,7 @@ namespace MyQuizAdmin.Views
         {
             var question = lbx_question.SelectedItem as Question;
             if (lbx_question.SelectedItem != null)
-                lbx_answer.ItemsSource = question.awnsers;
+                lbx_answer.ItemsSource = question.answerOption;
         }
         /*******************************
                   Click-Events
@@ -82,8 +82,8 @@ namespace MyQuizAdmin.Views
         private void bt_answerDel_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             var selectetQuestion = lbx_question.SelectedItem as Question;
-            var toRemove = lbx_answer.SelectedItem as Answer;
-            selectetQuestion.awnsers.Remove(toRemove);
+            var toRemove = lbx_answer.SelectedItem as AnswerOption;
+            selectetQuestion.answerOption.Remove(toRemove);
         }
 
         private void bt_answerAdd_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -91,9 +91,10 @@ namespace MyQuizAdmin.Views
             var selectetQuestion = lbx_question.SelectedItem as Question;
             if (lbx_question.SelectedItem!=null && tbx_answer.Text!= "")
             {
-                Answer newAnswer = new Answer();
+                AnswerOption newAnswer = new AnswerOption();
                 newAnswer.text = tbx_answer.Text;
-                selectetQuestion.awnsers.Add(newAnswer);
+                if (selectetQuestion.answerOption!=null)
+                    selectetQuestion.answerOption.Add(newAnswer);
             }
         }
 
