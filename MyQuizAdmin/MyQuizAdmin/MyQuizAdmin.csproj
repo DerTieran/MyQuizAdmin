@@ -109,13 +109,13 @@
     <Compile Include="Models\AnswerOption.cs" />
     <Compile Include="Models\Group.cs" />
     <Compile Include="Models\Registration.cs" />
-    <Compile Include="Models\Request.cs" />
     <Compile Include="Models\Result.cs" />
     <Compile Include="Models\SingleTopic.cs" />
-    <Compile Include="NavMenuItem.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Question.cs" />
     <Compile Include="Models\QuestionBlock.cs" />
+    <Compile Include="NavMenuItem.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Request.cs" />
     <Compile Include="Views\GroupDetail.xaml.cs">
       <DependentUpon>GroupDetail.xaml</DependentUpon>
     </Compile>
