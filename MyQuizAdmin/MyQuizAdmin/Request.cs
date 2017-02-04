@@ -136,6 +136,11 @@ namespace MyQuizAdmin
             return result;
         }
 
+        private async void questionairePost(ObservableCollection<QuestionBlock> questionlist)
+        {
+            await POST<ObservableCollection<QuestionBlock>>("api/questionBlock/", questionlist);
+        }
+
         public async Task<ObservableCollection<Question>> questionRequest()
         {
             ObservableCollection<Question> result = await GET<ObservableCollection<Question>>("api/questions/");
