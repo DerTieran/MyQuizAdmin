@@ -8,10 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using MyQuizAdmin.Models;
+using System.Collections.ObjectModel;
 
 namespace MyQuizAdmin
 {
-    class Request
+    public class Request
     {
         private const string BaseAddress = "http://h2653223.stratoserver.net";
         private HttpClient getClient()
@@ -112,6 +113,32 @@ namespace MyQuizAdmin
             result.Add(randResult());
             result.Add(randResult());
             result.Add(randResult());
+            return result;
+        }
+
+        public async Task<ObservableCollection<QuestionBlock>> questionnaireRequest()
+        {
+
+            ObservableCollection<QuestionBlock> result = new ObservableCollection<QuestionBlock>();
+            result = await GET<ObservableCollection<QuestionBlock>>("api/questionBlock/");
+
+            /*****  Testdaten  *****/
+            //if (result == null)
+            //{
+            //    QuestionBlock testQuestionnaire = new QuestionBlock();
+            //    testQuestionnaire.title = "Testliste";
+            //    Request request = new Request();
+            //    testQuestionnaire.questionList = await request.questionRequest();
+            //    result.Add(testQuestionnaire);
+            //}
+
+
+            return result;
+        }
+
+        public async Task<ObservableCollection<Question>> questionRequest()
+        {
+            ObservableCollection<Question> result = await GET<ObservableCollection<Question>>("api/questions/");
             return result;
         }
     }
