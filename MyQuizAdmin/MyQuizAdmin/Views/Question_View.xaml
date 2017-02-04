@@ -12,36 +12,42 @@
           EntranceNavigationTransitionInfo.IsTargetElement="True">
         
         <!--Controlpanel-->
-        <StackPanel Margin="250,100,0,0" Width="500" VerticalAlignment="Top" HorizontalAlignment="Left">
-            <StackPanel Orientation="Horizontal">
+        <StackPanel Margin="300,100,0,0" Width="500" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <StackPanel Orientation="Horizontal" Height="30">
                 <TextBox Name="tbx_questionlist" Width="400"/>
                 <Button Name="bt_questionlistDel" Content="-" Width="50" Click="bt_questionlistDel_Click"/>
                 <Button Name="bt_questionlistAdd" Content="+" Width="50" Click="bt_questionlistAdd_Click"/>
             </StackPanel>
             <ComboBox Name="cbx_questionListEdit" Width="500" DisplayMemberPath="title" SelectionChanged="cbx_questionListEdit_SelectionChanged"/>
-            <ListBox Name="lbx_question" Margin="0,115,0,0" Height="550" DisplayMemberPath="text" SelectionChanged="lbx_question_SelectionChanged" ItemsSource="{Binding ElementName=cbx_questionListEdit,Path=SelectedItem.questionList}"/>
+            <ListBox Name="lbx_question" Margin="0,75,0,0" Height="600" DisplayMemberPath="text" SelectionChanged="lbx_question_SelectionChanged" ItemsSource="{Binding ElementName=cbx_questionListEdit,Path=SelectedItem.questionList}"/>
             <StackPanel Orientation="Horizontal">
                 <Button Name="bt_questionDel" Content="-" Width="100" Click="bt_questionDel_Click"/>
                 <Button Name="bt_questionAdd" Content="+" Width="100" Margin="100,0,0,0" Click="bt_questionAdd_Click"/>
-                <Button Name="bt_questionSave" Content="Save" Width="100" Margin="100,0,0,0"/>
+                <Button Name="bt_questionSave" Content="Save" Width="100" Margin="100,0,0,0" Click="bt_questionSave_Click"/>
             </StackPanel>
         </StackPanel>
         
         <!--Valuepanel-->
-        <StackPanel Margin="1100,110,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="500" DataContext="{Binding ElementName=lbx_question,Path=SelectedItem,Mode=TwoWay}">
-            <StackPanel Orientation="Horizontal">
-                <ToggleSwitch Name="ts_typ" OffContent="Quizfrage" OnContent="Abstimmung" Width="250" Header="Typ" IsOn="{Binding ElementName=lbx_question,Path=SelectedItem.isVote}" Toggled="ts_typ_Toggled"/>
-                <ToggleSwitch Name="ts_kategory" OnContent="Singlechoice" OffContent="Multiplechoice" Width="250" Header="Kategory" IsOn="True"/>
-            </StackPanel>
-            <TextBlock Text="Frage" Margin="0,90,0,0" Height="20"/>
-            <TextBox x:Name="tbx_question" Height="160" TextWrapping="Wrap" AcceptsReturn="True" Text="{Binding text, Mode=TwoWay}"/>
-            <TextBlock Text="Antworten" Margin="0,100,0,0" Height="22"/>
-            <ListBox Name="lbx_answer" Height="265">
+        <StackPanel Margin="1000,110,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="500" DataContext="{Binding ElementName=lbx_question,Path=SelectedItem,Mode=TwoWay}">
+            <TextBlock Text="Fragetyp" Height="22"/>
+            <ComboBox Width="500">
+                <ComboBoxItem Content="Abstimmung"/>
+                <ComboBoxItem Content="Quizfrage"/>
+            </ComboBox>
+            <TextBlock Text="Fragenkategory" Margin="0,50,0,0" Height="22"/>
+            <ComboBox Width="500">
+                <ComboBoxItem Content="Singlechoice"/>
+                <ComboBoxItem Content="Multiplechoice"/>
+            </ComboBox>
+            <TextBlock Text="Frage" Margin="0,80,0,0" Height="22"/>
+            <TextBox x:Name="tbx_question" Height="110" TextWrapping="Wrap" AcceptsReturn="True" Text="{Binding text, Mode=TwoWay}"/>
+            <TextBlock Text="Antworten" Margin="0,70,0,0" Height="22"/>
+            <ListBox Name="lbx_answer" Height="265" SelectionChanged="lbx_answer_SelectionChanged">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="{Binding text}" Width="400"/>
-                            <SymbolIcon Symbol="Accept" Width="100"/>
+                            <SymbolIcon Name="si_answerOption" Symbol="Accept" Width="100"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
@@ -49,7 +55,7 @@
             
             <StackPanel Orientation="Horizontal">
                 <TextBox Name="tbx_answer" Width="300"/>
-                <ToggleButton Name="tbt_result" Content="Ergebnis" Width="100" Height="32" />
+                <Button Name="bt_result" Content="Ergebnis" Width="100" Height="32" Click="bt_result_Click"/>
                 <Button Name="bt_answerDel" Content="-" Width="50" Height="32" Click="bt_answerDel_Click"/>
                 <Button Name="bt_answerAdd" Content="+" Width="50" Height="32" Click="bt_answerAdd_Click"/>
 

@@ -23,8 +23,12 @@ namespace MyQuizAdmin.Views
         {
             questionlist = await request.questionnaireRequest();
             cbx_questionListEdit.ItemsSource = questionlist;
-            //lbx_question.ItemsSource = await request.questionRequest();
         }
+
+
+        /*******************************
+          selection Changed Methoden
+         *******************************/
 
         private async void cbx_questionListEdit_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -38,6 +42,20 @@ namespace MyQuizAdmin.Views
             if (lbx_question.SelectedItem != null)
                 lbx_answer.ItemsSource = question.answerOption;
         }
+
+        private void lbx_answer_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedAnswer = lbx_answer.SelectedItem as AnswerOption;
+            if (selectedAnswer.isCorrect == "isCorrect")
+            {
+                bt_result.Content = "Richtig";
+            }
+            else
+            {
+                bt_result.Content = "Falsch";
+            }
+        }
+
         /*******************************
                   Click-Events
          *******************************/
@@ -98,12 +116,27 @@ namespace MyQuizAdmin.Views
             }
         }
 
-        private void ts_typ_Toggled(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+
+        private void bt_questionSave_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            if (ts_typ.IsOn)
-                tbt_result.IsEnabled = false;
-            else
-                tbt_result.IsEnabled = true;
+            request.questionairePost(questionlist);
         }
+
+        private void bt_result_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            var selectedAnswer = lbx_answer.SelectedItem as AnswerOption;
+            if (selectedAnswer.isCorrect == "isCorrect")
+            {
+                selectedAnswer.isCorrect = "isWrong";
+                bt_result.Content = "Falsch";
+            }
+            else
+            {
+                selectedAnswer.isCorrect = "isCorrect";
+                bt_result.Content = "Richtig";
+            }
+        }
+
+
     }
 }
