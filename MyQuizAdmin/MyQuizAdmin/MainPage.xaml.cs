@@ -35,8 +35,8 @@ namespace MyQuizAdmin
                 new NavMenuItem()
                 {
                     Symbol = Symbol.Edit,
-                    Label = "Page2",
-                    DestinationPage = typeof(Views.Page2)
+                    Label = "Question_View",
+                    DestinationPage = typeof(Views.Question_View)
                 },
                 new NavMenuItem()
                 {
