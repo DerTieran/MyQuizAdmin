@@ -28,20 +28,20 @@ namespace MyQuizAdmin
             {
                 new NavMenuItem()
                 {
-                    Symbol = Symbol.Contact,
-                    Label = "Page1",
+                    Symbol = Symbol.ZeroBars,
+                    Label = "Auswertung",
                     DestinationPage = typeof(Views.Page1)
                 },
                 new NavMenuItem()
                 {
-                    Symbol = Symbol.Edit,
-                    Label = "Question_View",
+                    Symbol = Symbol.List,
+                    Label = "Fragen",
                     DestinationPage = typeof(Views.Question_View)
                 },
                 new NavMenuItem()
                 {
-                    Symbol = Symbol.Favorite,
-                    Label = "GroupView",
+                    Symbol = Symbol.Contact,
+                    Label = "Veranstaltungen",
                     DestinationPage = typeof(Views.GroupPage)
                 }
             });
