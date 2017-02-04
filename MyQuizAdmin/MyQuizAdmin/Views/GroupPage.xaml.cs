@@ -11,30 +11,21 @@ namespace MyQuizAdmin.Views
     /// </summary>
     public sealed partial class GroupPage : Page
     {
+        public List<Group> Groups { get; private set; }
+
         public GroupPage()
         {
-            
             Groups = new List<Group>
             {
-                new Group { Id = 0, Title = "g1" }
+                new Group { Id = 0, Title = "g0" },
+                new Group { Id = 1, Title = "g1" },
+                new Group { Id = 2, Title = "g2" },
+                new Group { Id = 3, Title = "g3" },
+                new Group { Id = 4, Title = "g4" }
             };
             
             this.InitializeComponent();
         }
 
-        public List<Group> Groups { get; private set; }
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-            /*
-            var propertyDesc = e.Parameter; as PropertyDescriptor;
-
-            if (propertyDesc != null)
-            {
-                DataContext = propertyDesc.Expando;
-            }
-            */
-        }
     }
 }

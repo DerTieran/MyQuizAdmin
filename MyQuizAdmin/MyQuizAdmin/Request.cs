@@ -8,10 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using MyQuizAdmin.Models;
+using System.Collections.ObjectModel;
 
 namespace MyQuizAdmin
 {
-    class Request
+    public class Request
     {
         private const string BaseAddress = "http://h2653223.stratoserver.net";
         private HttpClient getClient()
@@ -83,30 +84,61 @@ namespace MyQuizAdmin
             return result;
         }
 
+        Random rnd = new Random();
+        private Result randResult()
+        {
+            List<Result.Answer> resultAnswers = new List<Result.Answer>();
+            resultAnswers.Add(new Result.Answer { amount = rnd.Next(1, 50), text = "A" });
+            resultAnswers.Add(new Result.Answer { amount = rnd.Next(1, 50), text = "B" });
+            resultAnswers.Add(new Result.Answer { amount = rnd.Next(1, 50), text = "C" });
+            return new Result { questionText = "A, B oder C", resultAnswers = resultAnswers };
+        }
+
         public async Task <List<Result>> getResultForTopicInGroup(SingleTopic topic, Group group)
         {
             //Result result = await GET<Result>("/api/groups/" + group.id + "/topics/" + topic.id + "/results");
-            List<Result.Answer> resultAnswers = new List<Result.Answer>();
-            resultAnswers.Add(new Result.Answer { amount = 50, text="gut" });
-            resultAnswers.Add(new Result.Answer { amount = 10, text = " sehr gut" });
-            resultAnswers.Add(new Result.Answer { amount = 20, text = "schlecht" });
             List<Result> result = new List<Result>();
-            result.Add(new Result { questionText = "Wie war das Wetter", resultAnswers = resultAnswers });
-            result.Add(new Result { questionText = "Wie war der Schnabeltier", resultAnswers = resultAnswers });
+            result.Add(randResult());
+            result.Add(randResult());
+            result.Add(randResult());
+            result.Add(randResult());
             return result;
         }
 
         public async Task<List<Result>> getResultForGroup(Group group)
         {
             //Result result = await GET<Result>("/api/groups/" + group.id + "/results");
-            List<Result.Answer> resultAnswers = new List<Result.Answer>();
-            Random rnd = new Random();
-            resultAnswers.Add(new Result.Answer { amount = rnd.Next(1,50), text = "gut" });
-            resultAnswers.Add(new Result.Answer { amount = rnd.Next(1, 50), text = " sehr gut" });
-            resultAnswers.Add(new Result.Answer { amount = rnd.Next(1, 50), text = "schlecht" });
             List<Result> result = new List<Result>();
-            result.Add(new Result { questionText = "Wie war die Vorlesung", resultAnswers = resultAnswers });
-            result.Add(new Result { questionText = "Wie war die Präsentaion", resultAnswers = resultAnswers });
+            result.Add(randResult());
+            result.Add(randResult());
+            result.Add(randResult());
+            result.Add(randResult());
+            return result;
+        }
+
+        public async Task<ObservableCollection<QuestionBlock>> questionnaireRequest()
+        {
+
+            ObservableCollection<QuestionBlock> result = new ObservableCollection<QuestionBlock>();
+            result = await GET<ObservableCollection<QuestionBlock>>("api/questionBlock/");
+
+            /*****  Testdaten  *****/
+            //if (result == null)
+            //{
+            //    QuestionBlock testQuestionnaire = new QuestionBlock();
+            //    testQuestionnaire.title = "Testliste";
+            //    Request request = new Request();
+            //    testQuestionnaire.questionList = await request.questionRequest();
+            //    result.Add(testQuestionnaire);
+            //}
+
+
+            return result;
+        }
+
+        public async Task<ObservableCollection<Question>> questionRequest()
+        {
+            ObservableCollection<Question> result = await GET<ObservableCollection<Question>>("api/questions/");
             return result;
         }
     }
