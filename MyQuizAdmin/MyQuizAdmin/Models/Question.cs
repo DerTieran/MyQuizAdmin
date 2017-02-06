@@ -21,7 +21,7 @@ namespace MyQuizAdmin.Models
             get { return notifyText; }
         }
 
-        public ObservableCollection<AnswerOption> answerOption { get; set; }
+        public ObservableCollection<AnswerOption> answerOption { get; set; } = new ObservableCollection<AnswerOption>();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
