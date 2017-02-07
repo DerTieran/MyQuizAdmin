@@ -12,23 +12,23 @@ namespace MyQuizAdmin.Models
     {
         private string notifyText { get; set; }
 
-        public int id { get; set; }
+        public int Id { get; set; }
         public string Category { get; set; }
         public string MultipleChoice { get; set; }
-        public string text
+        public string Text
         {
-            set { notifyText = value; OnPropertyChanged("text");}
+            set { notifyText = value; OnPropertyChanged("Text");}
             get { return notifyText; }
         }
 
-        public ObservableCollection<AnswerOption> answerOption { get; set; }
+        public ObservableCollection<AnswerOption> AnswerOption { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void OnPropertyChanged(string propertyName)
         {
             PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler !=null)
+            if (handler != null)
             {
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }

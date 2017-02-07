@@ -36,7 +36,7 @@ namespace MyQuizAdmin.Views
         {
             var question = lbx_question.SelectedItem as Question;
             if (lbx_question.SelectedItem != null)
-                lbx_answer.ItemsSource = question.answerOption;
+                lbx_answer.ItemsSource = question.AnswerOption;
         }
         /*******************************
                   Click-Events
@@ -52,7 +52,7 @@ namespace MyQuizAdmin.Views
             if (tbx_questionlist.Text!="")
             {
                 QuestionBlock newQuestionnaire = new QuestionBlock();
-                newQuestionnaire.title = tbx_questionlist.Text;
+                newQuestionnaire.Title = tbx_questionlist.Text;
                 questionlist.Add(newQuestionnaire);
                 cbx_questionListEdit.SelectedItem = newQuestionnaire;
             }
@@ -70,7 +70,7 @@ namespace MyQuizAdmin.Views
 
             var questionaire = cbx_questionListEdit.SelectedItem as QuestionBlock;
             Question newQuestion = new Question();
-            newQuestion.text = "neue Frage";
+            newQuestion.Text = "neue Frage";
             if (questionaire != null)
             {
                 questionaire.questionList.Add(newQuestion);
@@ -83,7 +83,7 @@ namespace MyQuizAdmin.Views
         {
             var selectetQuestion = lbx_question.SelectedItem as Question;
             var toRemove = lbx_answer.SelectedItem as AnswerOption;
-            selectetQuestion.answerOption.Remove(toRemove);
+            selectetQuestion.AnswerOption.Remove(toRemove);
         }
 
         private void bt_answerAdd_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -92,9 +92,9 @@ namespace MyQuizAdmin.Views
             if (lbx_question.SelectedItem!=null && tbx_answer.Text!= "")
             {
                 AnswerOption newAnswer = new AnswerOption();
-                newAnswer.text = tbx_answer.Text;
-                if (selectetQuestion.answerOption!=null)
-                    selectetQuestion.answerOption.Add(newAnswer);
+                newAnswer.Text = tbx_answer.Text;
+                if (selectetQuestion.AnswerOption!=null)
+                    selectetQuestion.AnswerOption.Add(newAnswer);
             }
         }
 
