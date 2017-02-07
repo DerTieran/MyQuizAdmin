@@ -1,11 +1,9 @@
-﻿using System;
-
-namespace MyQuizAdmin.Models
+﻿namespace MyQuizAdmin.Models
 {
     public class AnswerOption
     {
-        public long Id { get; set; }
-        public string Text { get; set; } = "Antwort " + new Random().Next();
-        public string IsCorrect { get; set; }
+        public int id { get; set; }
+        public string text { get; set; }
+        public string isCorrect { get; set; }
     }
 }
