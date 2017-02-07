@@ -2,8 +2,8 @@
 {
     public class AnswerOption
     {
-        public int id { get; set; }
-        public string text { get; set; }
-        public string isCorrect { get; set; }
+        public long Id { get; set; }
+        public string Text { get; set; }
+        public string IsCorrect { get; set; }
     }
 }

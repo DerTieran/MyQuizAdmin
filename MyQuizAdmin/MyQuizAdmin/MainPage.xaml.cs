@@ -30,7 +30,7 @@ namespace MyQuizAdmin
                 {
                     Symbol = Symbol.ZeroBars,
                     Label = "Auswertung",
-                    DestinationPage = typeof(Views.Page1)
+                    DestinationPage = typeof(Views.StatisticView)
                 },
                 new NavMenuItem()
                 {

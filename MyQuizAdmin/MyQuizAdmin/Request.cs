@@ -105,35 +105,16 @@ namespace MyQuizAdmin
             return result;
         }
 
-        Random rnd = new Random();
-        private Result randResult()
+        public async Task <List<GivenAnswer>> getGivenAnswersForTopicInGroup(SingleTopic singleTopic, Group group)
         {
-            List<Result.Answer> resultAnswers = new List<Result.Answer>();
-            resultAnswers.Add(new Result.Answer { amount = rnd.Next(1, 50), text = "A" });
-            resultAnswers.Add(new Result.Answer { amount = rnd.Next(1, 50), text = "B" });
-            resultAnswers.Add(new Result.Answer { amount = rnd.Next(1, 50), text = "C" });
-            return new Result { questionText = "A, B oder C", resultAnswers = resultAnswers };
-        }
 
-        public async Task <List<Result>> getResultForTopicInGroup(SingleTopic topic, Group group)
-        {
-            //Result result = await GET<Result>("/api/groups/" + group.id + "/topics/" + topic.id + "/results");
-            List<Result> result = new List<Result>();
-            result.Add(randResult());
-            result.Add(randResult());
-            result.Add(randResult());
-            result.Add(randResult());
+            List<GivenAnswer> result = await GET<List<GivenAnswer>>("/api/givenAnswer?groupId=" + group.Id + "&singleTopicId=" + singleTopic.Id);
             return result;
         }
 
-        public async Task<List<Result>> getResultForGroup(Group group)
+        public async Task<List<GivenAnswer>> getGivenAnswersForGroup(Group group)
         {
-            //Result result = await GET<Result>("/api/groups/" + group.id + "/results");
-            List<Result> result = new List<Result>();
-            result.Add(randResult());
-            result.Add(randResult());
-            result.Add(randResult());
-            result.Add(randResult());
+            List<GivenAnswer> result = await GET<List<GivenAnswer>>("/api/givenAnswer?groupId=" + group.Id);
             return result;
         }
 
