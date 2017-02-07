@@ -12,6 +12,8 @@ namespace MyQuizAdmin.Views
     public sealed partial class Question_View : Page
     {
         public ObservableCollection<QuestionBlock> questionBlockList = new ObservableCollection<QuestionBlock>();
+        public List<string> typeList = new List<string>() { "Singlechoice", "Multiplechoice" };
+        public List<string> categoryList = new List<string>() {"Abstimmung","Quizabfrage" };
         public Request request = new Request();
 
         public Question_View()
@@ -22,14 +24,17 @@ namespace MyQuizAdmin.Views
         private async void Page_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             questionBlockList = await request.questionnaireRequest();
-            QuestionBlock testQuestionnaire = new QuestionBlock();
-            testQuestionnaire.title = "Testliste";
-            Question testQuestion = new Question();
-            testQuestion.Category = "Abstimmung";
-            testQuestion.MultipleChoice = "Singlechoice";
-            testQuestion.text = "testfrage";
-            testQuestionnaire.questionList.Add(testQuestion);
-            questionBlockList.Add(testQuestionnaire);
+
+            //Testdaten
+            //QuestionBlock testQuestionnaire = new QuestionBlock();
+            //testQuestionnaire.title = "Testliste";
+            //Question testQuestion = new Question();
+            //testQuestion.category = "Abstimmung";
+            //testQuestion.type = "Singlechoice";
+            //testQuestion.text = "testfrage";
+            //testQuestionnaire.questions.Add(testQuestion);
+            //questionBlockList.Add(testQuestionnaire);
+
             cbx_questionListEdit.ItemsSource = questionBlockList;
         }
 
@@ -43,9 +48,12 @@ namespace MyQuizAdmin.Views
             var selectedQuestion = lbx_question.SelectedItem as Question;
             if (lbx_question.SelectedItem != null)
             {
-                lbx_answer.ItemsSource = selectedQuestion.answerOption;
-                cbx_questionCategory.SelectedItem = selectedQuestion.Category;
-                cbx_questionTyp.SelectedItem = selectedQuestion.MultipleChoice;
+                lbx_answer.ItemsSource = selectedQuestion.answerOptions;
+
+                var categoryIndex = categoryList.IndexOf(selectedQuestion.category);
+                cbx_questionCategory.SelectedIndex = categoryIndex;
+                var typeIndex = typeList.IndexOf(selectedQuestion.type);
+                cbx_questionTyp.SelectedIndex = typeIndex;
             }
         }
 
@@ -54,7 +62,7 @@ namespace MyQuizAdmin.Views
             if (lbx_question.SelectedItem!=null)
             {
                 var question = lbx_question.SelectedItem as Question;
-                question.Category = cbx_questionCategory.SelectedItem as string;
+                question.category = cbx_questionCategory.SelectedItem as string;
             }
         }
 
@@ -63,22 +71,22 @@ namespace MyQuizAdmin.Views
             if (lbx_question.SelectedItem != null)
             {
                 var question = lbx_question.SelectedItem as Question;
-                question.MultipleChoice = cbx_questionTyp.SelectedItem.ToString();
+                question.type = cbx_questionTyp.SelectedItem.ToString();
             }
 
         }
 
         private void lbx_answer_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var selectedAnswer = lbx_answer.SelectedItem as AnswerOption;
-            if (selectedAnswer.isCorrect == "isCorrect")
+            if (lbx_answer.SelectedItem!=null)
             {
-                bt_result.Content = "Richtig";
+                var selectedAnswer = lbx_answer.SelectedItem as AnswerOption;
+                if (selectedAnswer.isCorrect == "isCorrect")
+                    bt_result.Content = "Richtig";
+                else
+                    bt_result.Content = "Falsch";
             }
-            else
-            {
-                bt_result.Content = "Falsch";
-            }
+
         }
 
         /*******************************
@@ -86,8 +94,12 @@ namespace MyQuizAdmin.Views
          *******************************/
         private void bt_questionlistDel_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            var toRemove = cbx_questionListEdit.SelectedItem as QuestionBlock;
-            questionBlockList.Remove(toRemove);
+            if (cbx_questionListEdit.SelectedItem != null)
+            {
+                var toRemove = cbx_questionListEdit.SelectedItem as QuestionBlock;
+                questionBlockList.Remove(toRemove);
+            }
+
         }
 
         private void bt_questionlistAdd_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -103,9 +115,13 @@ namespace MyQuizAdmin.Views
         }
         private void bt_questionDel_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            var questionaire = cbx_questionListEdit.SelectedItem as QuestionBlock;
-            var toRemove = lbx_question.SelectedItem as Question;
-            questionaire.questionList.Remove(toRemove);
+            if (lbx_question.SelectedItem!=null)
+            {
+                var questionaire = cbx_questionListEdit.SelectedItem as QuestionBlock;
+                var toRemove = lbx_question.SelectedItem as Question;
+                questionaire.questions.Remove(toRemove);
+            }
+
         }
 
         private void bt_questionAdd_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -116,17 +132,21 @@ namespace MyQuizAdmin.Views
             newQuestion.text = "neue Frage";
             if (questionaire != null)
             {
-                questionaire.questionList.Add(newQuestion);
-                lbx_question.ItemsSource = questionaire.questionList;
+                questionaire.questions.Add(newQuestion);
+                lbx_question.ItemsSource = questionaire.questions;
             }
 
         }
 
         private void bt_answerDel_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            var selectetQuestion = lbx_question.SelectedItem as Question;
-            var toRemove = lbx_answer.SelectedItem as AnswerOption;
-            selectetQuestion.answerOption.Remove(toRemove);
+            if (lbx_answer.SelectedItem!=null)
+            {
+                var selectetQuestion = lbx_question.SelectedItem as Question;
+                var toRemove = lbx_answer.SelectedItem as AnswerOption;
+                selectetQuestion.answerOptions.Remove(toRemove);
+            }
+
         }
 
         private void bt_answerAdd_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -137,8 +157,8 @@ namespace MyQuizAdmin.Views
                 AnswerOption newAnswer = new AnswerOption();
                 newAnswer.text = tbx_answer.Text;
                 newAnswer.isCorrect = "isWrong";
-                if (selectetQuestion.answerOption!=null)
-                    selectetQuestion.answerOption.Add(newAnswer);
+                if (selectetQuestion.answerOptions!=null)
+                    selectetQuestion.answerOptions.Add(newAnswer);
             }
         }
 

@@ -122,9 +122,6 @@ namespace MyQuizAdmin
             ObservableCollection<QuestionBlock> result = new ObservableCollection<QuestionBlock>();
             result = await GET<ObservableCollection<QuestionBlock>>("api/questionBlock/");
 
-            /*****  Testdaten  *****/
-
-
             return result;
         }
 

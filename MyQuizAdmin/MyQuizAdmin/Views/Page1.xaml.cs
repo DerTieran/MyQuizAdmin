@@ -24,8 +24,8 @@ namespace MyQuizAdmin.Views
 
         private async void Page_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            List<Group> groupResponList = await request.GetGroups();             
-            cbx_groups.ItemsSource = groupResponList;          
+            List<Group> groupResponList = await request.GetGroups();
+            cbx_groups.ItemsSource = groupResponList;
         }
 
         private async void cbx_groups_SelectionChanged(object sender, SelectionChangedEventArgs e)

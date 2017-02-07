@@ -19,7 +19,7 @@
                 <Button Name="bt_questionlistAdd" Content="+" Width="50" Click="bt_questionlistAdd_Click"/>
             </StackPanel>
             <ComboBox Name="cbx_questionListEdit" Width="500" DisplayMemberPath="title"/>
-            <ListBox Name="lbx_question" Margin="0,75,0,0" Height="600" DisplayMemberPath="text" SelectionChanged="lbx_question_SelectionChanged" ItemsSource="{Binding ElementName=cbx_questionListEdit,Path=SelectedItem.questionList}"/>
+            <ListBox x:Name="lbx_question" Margin="0,75,0,0" Height="600" DisplayMemberPath="text" SelectionChanged="lbx_question_SelectionChanged" ItemsSource="{Binding ElementName=cbx_questionListEdit, Path= SelectedItem.questions}"/>
             <StackPanel Orientation="Horizontal">
                 <Button Name="bt_questionDel" Content="-" Width="100" Click="bt_questionDel_Click"/>
                 <Button Name="bt_questionAdd" Content="+" Width="100" Margin="100,0,0,0" Click="bt_questionAdd_Click"/>
