@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyQuizAdmin.Controls;
+using System;
 using System.Collections.ObjectModel;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -30,7 +31,7 @@ namespace MyQuizAdmin
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
         /// <param name="e">Details about the launch request and process.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
@@ -71,6 +72,13 @@ namespace MyQuizAdmin
 
             // Ensure the current window is active
             Window.Current.Activate();
+
+            string deviceID = (string)Windows.Storage.ApplicationData.Current.RoamingSettings.Values["deviceID"];
+            if (deviceID == null || deviceID.Length <= 0)
+            {
+                LoginDialog loginDialog = new LoginDialog();
+                await loginDialog.ShowAsync();
+            }
         }
 
         /// <summary>

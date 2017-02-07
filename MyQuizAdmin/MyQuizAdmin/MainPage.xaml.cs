@@ -57,12 +57,6 @@ namespace MyQuizAdmin
         {
             this.InitializeComponent();
 
-            string deviceID = (string)Windows.Storage.ApplicationData.Current.RoamingSettings.Values["deviceID"];
-            if (deviceID == null || deviceID.Length <= 0)
-            {
-                ShowLoginDialog();
-            }
-
             this.Loaded += (sender, args) =>
             {
                 Current = this;
@@ -70,12 +64,6 @@ namespace MyQuizAdmin
             };
 
             NavMenuList.ItemsSource = navlist;
-        }
-
-        private async void ShowLoginDialog()
-        {
-            LoginDialog loginDialog = new LoginDialog();
-            await loginDialog.ShowAsync();
         }
 
         public Frame AppFrame { get { return this.frame; } }
