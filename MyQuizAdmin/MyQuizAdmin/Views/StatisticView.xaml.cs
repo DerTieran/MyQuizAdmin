@@ -82,8 +82,7 @@ namespace MyQuizAdmin.Views
         private async void cbx_groups_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var SelectedGroup = cbx_groups.SelectedItem as Group;
-            List<SingleTopic> topicResponList = await request.getTopicsForGroup(SelectedGroup);
-            lbx_people.ItemsSource = topicResponList;
+            lbx_people.ItemsSource = SelectedGroup.SingleTopics;
             lv_static.ItemsSource = null;
             List<GivenAnswer> data = await request.getGivenAnswersForGroup(SelectedGroup);
             lv_static.ItemsSource = aggregateQuestionResults(data);
