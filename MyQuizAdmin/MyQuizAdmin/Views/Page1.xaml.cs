@@ -28,20 +28,65 @@ namespace MyQuizAdmin.Views
             cbx_groups.ItemsSource = groupResponList;          
         }
 
+        private class QuestionResult
+        {
+            public long id { get; set; }
+            public string text { get; set; }
+            public List<Answer> answers { get; set; }
+
+            public class Answer
+            {
+                public long id { get; set; }
+                public string text { get; set; }
+                public int count { get; set; } = 1;
+            }
+        }
+
+        private List<QuestionResult> aggregateQuestionResults(List<GivenAnswer> givenAnswers)
+        {
+            return givenAnswers.Aggregate(new List<QuestionResult>(), (questionResults, givenAnswer) => {
+                var foundQuestion = questionResults.Find(question => question.id == givenAnswer.Question.Id);
+                if (foundQuestion != null)
+                {
+                    var foundAnswer = foundQuestion.answers.Find(answer => answer.id == givenAnswer.AnswerOption.Id);
+                    if (foundAnswer != null)
+                    {
+                        foundAnswer.count = foundAnswer.count + 1;
+                    }
+                    else
+                    {
+                        foundQuestion.answers.Add(new QuestionResult.Answer
+                        {
+                            id = givenAnswer.AnswerOption.Id,
+                            text = givenAnswer.AnswerOption.Text
+                        });
+                    }
+                }
+                else
+                {
+                    questionResults.Add(new QuestionResult
+                    {
+                        id = givenAnswer.Question.Id,
+                        text = givenAnswer.Question.Text,
+                        answers = new List<QuestionResult.Answer> { new QuestionResult.Answer
+                        {
+                            id = givenAnswer.AnswerOption.Id,
+                            text = givenAnswer.AnswerOption.Text
+                        } }
+                    });
+                }
+                return questionResults;
+            });
+        }
+
         private async void cbx_groups_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var SelectedGroup = cbx_groups.SelectedItem as Group;
             List<SingleTopic> topicResponList = await request.getTopicsForGroup(SelectedGroup);
             lbx_people.ItemsSource = topicResponList;
-            if (lv_static.ItemsSource != null )
-            {
-                lv_static.ItemsSource = null;
-            }
-
-            if (lv_static.ItemsSource == null)
-            {
-                lv_static.ItemsSource = await request.getGivenAnswersForGroup(SelectedGroup);
-            }
+            lv_static.ItemsSource = null;
+            List<GivenAnswer> data = await request.getGivenAnswersForGroup(SelectedGroup);
+            lv_static.ItemsSource = aggregateQuestionResults(data);
         }
 
         private async void txb_searchpeople_SelectionChanged(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -49,7 +94,7 @@ namespace MyQuizAdmin.Views
             var topicList = await request.getTopicsForGroup(cbx_groups.SelectedItem as Group);
             if (lbx_people.ItemsSource != null)
             {
-                this.lbx_people.ItemsSource = topicList.Where(w => w.String.ToUpper().Contains(txb_searchpeople.Text.ToUpper()) || w.String.ToUpper().Contains(txb_searchpeople.Text.ToUpper()));
+                this.lbx_people.ItemsSource = topicList.Where(w => w.Name.ToUpper().Contains(txb_searchpeople.Text.ToUpper()) || w.Name.ToUpper().Contains(txb_searchpeople.Text.ToUpper()));
                 LayoutUpdateFlag = true;
             }
         }
@@ -58,7 +103,8 @@ namespace MyQuizAdmin.Views
         {
             var SelectedGroup = cbx_groups.SelectedItem as Group;
             var SelectedTopic = lbx_people.SelectedItem as SingleTopic;
-            lv_static.ItemsSource = await request.getGivenAnswersForTopicInGroup(SelectedTopic, SelectedGroup);
+            List<GivenAnswer> data = await request.getGivenAnswersForTopicInGroup(SelectedTopic, SelectedGroup);
+            lv_static.ItemsSource = aggregateQuestionResults(data);
         }
     }
 }

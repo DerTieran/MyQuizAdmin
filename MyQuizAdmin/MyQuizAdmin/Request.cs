@@ -105,25 +105,16 @@ namespace MyQuizAdmin
             return result;
         }
 
-        public async Task <List<GivenAnswer>> getGivenAnswersForTopicInGroup(SingleTopic topic, Group group)
+        public async Task <List<GivenAnswer>> getGivenAnswersForTopicInGroup(SingleTopic singleTopic, Group group)
         {
-            //Result result = await GET<Result>("/api/groups/" + group.id + "/topics/" + topic.id + "/results");
-            List<GivenAnswer> result = new List<GivenAnswer>();
-            result.Add(new GivenAnswer { Group = group, SingleTopic = topic });
-            result.Add(new GivenAnswer { Group = group, SingleTopic = topic });
-            result.Add(new GivenAnswer { Group = group, SingleTopic = topic });
-            result.Add(new GivenAnswer { Group = group, SingleTopic = topic });
+
+            List<GivenAnswer> result = await GET<List<GivenAnswer>>("/api/givenAnswer?groupId=" + group.Id + "&singleTopicId=" + singleTopic.Id);
             return result;
         }
 
         public async Task<List<GivenAnswer>> getGivenAnswersForGroup(Group group)
         {
-            //Result result = await GET<Result>("/api/groups/" + group.id + "/results");
-            List<GivenAnswer> result = new List<GivenAnswer>();
-            result.Add(new GivenAnswer { Group = group });
-            result.Add(new GivenAnswer { Group = group });
-            result.Add(new GivenAnswer { Group = group });
-            result.Add(new GivenAnswer { Group = group });
+            List<GivenAnswer> result = await GET<List<GivenAnswer>>("/api/givenAnswer?groupId=" + group.Id);
             return result;
         }
 
