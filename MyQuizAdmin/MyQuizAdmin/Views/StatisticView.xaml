@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="MyQuizAdmin.Views.Page1"
+    x:Class="MyQuizAdmin.Views.StatisticView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MyQuizAdmin.Views"
@@ -53,16 +53,16 @@
             <TextBlock Name="txb_group" Text="Gruppen" />
             <ComboBox Name="cbx_groups" Width="400" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="30" SelectionChanged="cbx_groups_SelectionChanged" DisplayMemberPath="Title" RelativePanel.Below="txb_group"/>
             <TextBox Margin="0,10,0,0" Name="txb_searchpeople" Width="400" Height="30" SelectionChanged="txb_searchpeople_SelectionChanged" RelativePanel.Below="cbx_groups" />
-            <ListBox  Name="lbx_people" Width="400" Margin="0,5,0,0"  SelectionChanged="lbx_people_SelectionChanged" DisplayMemberPath="String" RelativePanel.Below="txb_searchpeople"/>
+            <ListBox  Name="lbx_people" Width="400" Margin="0,5,0,0"  SelectionChanged="lbx_people_SelectionChanged" DisplayMemberPath="Name" RelativePanel.Below="txb_searchpeople"/>
         </RelativePanel>
         <ListView  Margin="0,0,0,30"  Grid.Row="0" Grid.Column="1" Name="lv_static">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Name="sp_static">
-                        <TextBlock Name="tb_question" Text="{Binding questionText}" />
+                        <TextBlock Name="tb_question" Text="{Binding text}" />
                         <Charting:Chart  x:Name="ColumnChart" HorizontalAlignment="Left" VerticalAlignment="Top" 
                                  Width="400" Height="400">
-                            <Charting:ColumnSeries Name="chCo_static" Title="Antworten" ItemsSource="{Binding resultAnswers}" Margin="0" IndependentValuePath="text" Height="300" Width="300" DependentValuePath="amount"  IsSelectionEnabled="True">
+                            <Charting:ColumnSeries Name="chCo_static" Title="Antworten" ItemsSource="{Binding answers}" Margin="0" IndependentValuePath="text" Height="300" Width="300" DependentValuePath="count"  IsSelectionEnabled="True">
                                 <Charting:ColumnSeries.LegendItemStyle>
                                     <Style TargetType="Control">
                                         <Setter Property="Width" Value="0" />

@@ -28,20 +28,20 @@ namespace MyQuizAdmin
             {
                 new NavMenuItem()
                 {
+                    Symbol = Symbol.ZeroBars,
+                    Label = "Auswertung",
+                    DestinationPage = typeof(Views.StatisticView)
+                },
+                new NavMenuItem()
+                {
+                    Symbol = Symbol.List,
+                    Label = "Fragen",
+                    DestinationPage = typeof(Views.Question_View)
+                },
+                new NavMenuItem()
+                {
                     Symbol = Symbol.Contact,
-                    Label = "Page1",
-                    DestinationPage = typeof(Views.Page1)
-                },
-                new NavMenuItem()
-                {
-                    Symbol = Symbol.Edit,
-                    Label = "Page2",
-                    DestinationPage = typeof(Views.Page2)
-                },
-                new NavMenuItem()
-                {
-                    Symbol = Symbol.Favorite,
-                    Label = "GroupView",
+                    Label = "Veranstaltungen",
                     DestinationPage = typeof(Views.GroupPage)
                 }
             });
@@ -57,12 +57,6 @@ namespace MyQuizAdmin
         {
             this.InitializeComponent();
 
-            string deviceID = (string)Windows.Storage.ApplicationData.Current.RoamingSettings.Values["deviceID"];
-            if (deviceID == null || deviceID.Length <= 0)
-            {
-                ShowLoginDialog();
-            }
-
             this.Loaded += (sender, args) =>
             {
                 Current = this;
@@ -70,12 +64,6 @@ namespace MyQuizAdmin
             };
 
             NavMenuList.ItemsSource = navlist;
-        }
-
-        private async void ShowLoginDialog()
-        {
-            LoginDialog loginDialog = new LoginDialog();
-            await loginDialog.ShowAsync();
         }
 
         public Frame AppFrame { get { return this.frame; } }
