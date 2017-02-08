@@ -48,6 +48,7 @@ namespace MyQuizAdmin
             HttpClient client = getClient();
 
             T result = default(T);
+            var a = JsonConvert.SerializeObject(data);
             var content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
             HttpResponseMessage response = await client.PostAsync(path, content);
             if (response.IsSuccessStatusCode)
@@ -125,15 +126,14 @@ namespace MyQuizAdmin
             return result;
         }
 
-        public async void questionairePost(ObservableCollection<QuestionBlock> questionlist)
+        public async void questionaireListPost(ObservableCollection<QuestionBlock> questionlist)
         {
             await POST<ObservableCollection<QuestionBlock>>("api/questionBlock/", questionlist);
         }
 
-        public async Task<ObservableCollection<Question>> questionRequest()
+        public async void questionairePost(QuestionBlock questionBlock)
         {
-            ObservableCollection<Question> result = await GET<ObservableCollection<Question>>("api/questions/");
-            return result;
+            await POST<QuestionBlock>("api/questionBlock/", questionBlock);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace MyQuizAdmin.Views
     {
         public ObservableCollection<QuestionBlock> questionBlockList = new ObservableCollection<QuestionBlock>();
         public List<string> typeList = new List<string>() { "Singlechoice", "Multiplechoice" };
-        public List<string> categoryList = new List<string>() {"Abstimmung","Quizabfrage" };
+        public List<string> categoryList = new List<string>() {"Umfrage","Quiz" };
         public Request request = new Request();
 
         public Question_View()
@@ -23,6 +23,8 @@ namespace MyQuizAdmin.Views
 
         private async void Page_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
+            cbx_questionCategory.ItemsSource = categoryList;
+            cbx_questionType.ItemsSource = typeList;
             questionBlockList = await request.questionnaireRequest();
 
             //Testdaten
@@ -30,7 +32,7 @@ namespace MyQuizAdmin.Views
             //testQuestionnaire.title = "Testliste";
             //Question testQuestion = new Question();
             //testQuestion.category = "Abstimmung";
-            //testQuestion.type = "Singlechoice";
+            //testQuestion.multipleChoice = "Singlechoice";
             //testQuestion.text = "testfrage";
             //testQuestionnaire.questions.Add(testQuestion);
             //questionBlockList.Add(testQuestionnaire);
@@ -50,10 +52,10 @@ namespace MyQuizAdmin.Views
             {
                 lbx_answer.ItemsSource = selectedQuestion.answerOptions;
 
-                var categoryIndex = categoryList.IndexOf(selectedQuestion.category);
+                var categoryIndex = categoryList.IndexOf(selectedQuestion.Category);
                 cbx_questionCategory.SelectedIndex = categoryIndex;
-                var typeIndex = typeList.IndexOf(selectedQuestion.type);
-                cbx_questionTyp.SelectedIndex = typeIndex;
+                var typeIndex = typeList.IndexOf(selectedQuestion.Type);
+                cbx_questionType.SelectedIndex = typeIndex;
             }
         }
 
@@ -62,7 +64,7 @@ namespace MyQuizAdmin.Views
             if (lbx_question.SelectedItem!=null)
             {
                 var question = lbx_question.SelectedItem as Question;
-                question.category = cbx_questionCategory.SelectedItem as string;
+                question.Category = cbx_questionCategory.SelectedItem as string;
             }
         }
 
@@ -71,21 +73,22 @@ namespace MyQuizAdmin.Views
             if (lbx_question.SelectedItem != null)
             {
                 var question = lbx_question.SelectedItem as Question;
-                question.type = cbx_questionTyp.SelectedItem.ToString();
+                question.Type = cbx_questionType.SelectedItem as string;
+
             }
 
         }
 
         private void lbx_answer_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (lbx_answer.SelectedItem!=null)
-            {
-                var selectedAnswer = lbx_answer.SelectedItem as AnswerOption;
-                if (selectedAnswer.isCorrect == "isCorrect")
-                    bt_result.Content = "Richtig";
-                else
-                    bt_result.Content = "Falsch";
-            }
+            //if (lbx_answer.SelectedItem!=null)
+            //{
+            //    var selectedAnswer = lbx_answer.SelectedItem as AnswerOption;
+            //    if (selectedAnswer.isCorrect == "isCorrect")
+            //        bt_result.Content = "Richtig";
+            //    else
+            //        bt_result.Content = "Falsch";
+            //}
 
         }
 
@@ -107,7 +110,8 @@ namespace MyQuizAdmin.Views
             if (tbx_questionlist.Text!="")
             {
                 QuestionBlock newQuestionnaire = new QuestionBlock();
-                newQuestionnaire.title = tbx_questionlist.Text;
+                newQuestionnaire.Title = tbx_questionlist.Text;
+                tbx_questionlist.Text = "";
                 questionBlockList.Add(newQuestionnaire);
                 cbx_questionListEdit.SelectedItem = newQuestionnaire;
             }
@@ -126,14 +130,12 @@ namespace MyQuizAdmin.Views
 
         private void bt_questionAdd_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-
             var questionaire = cbx_questionListEdit.SelectedItem as QuestionBlock;
-            Question newQuestion = new Question();
-            newQuestion.text = "neue Frage";
             if (questionaire != null)
             {
+                Question newQuestion = new Question();
+                newQuestion.Text = "neue Frage";
                 questionaire.questions.Add(newQuestion);
-                lbx_question.ItemsSource = questionaire.questions;
             }
 
         }
@@ -155,8 +157,9 @@ namespace MyQuizAdmin.Views
             if (lbx_question.SelectedItem!=null && tbx_answer.Text!= "")
             {
                 AnswerOption newAnswer = new AnswerOption();
-                newAnswer.text = tbx_answer.Text;
-                newAnswer.isCorrect = "isWrong";
+                newAnswer.Text = tbx_answer.Text;
+                tbx_answer.Text = "";
+                newAnswer.Result = "false";
                 if (selectetQuestion.answerOptions!=null)
                     selectetQuestion.answerOptions.Add(newAnswer);
             }
@@ -165,29 +168,56 @@ namespace MyQuizAdmin.Views
 
         private void bt_questionSave_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            request.questionairePost(questionBlockList);
+            if (cbx_questionListEdit.SelectedItem != null)
+                request.questionairePost(cbx_questionListEdit.SelectedItem as QuestionBlock);
         }
 
         private void bt_result_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         { 
-            var selectedAnswer = lbx_answer.SelectedItem as AnswerOption;
-            if (selectedAnswer!=null)
-            {
-                if (selectedAnswer.isCorrect == "isCorrect")
-                {
-                    selectedAnswer.isCorrect = "isWrong";
-                    bt_result.Content = "Falsch";
-                }
-                else
-                {
-                    selectedAnswer.isCorrect = "isCorrect";
-                    bt_result.Content = "Richtig";
-                }
+            //var selectedAnswer = lbx_answer.SelectedItem as AnswerOption;
+            //if (selectedAnswer!=null)
+            //{
+            //    if (selectedAnswer.isCorrect == "isCorrect")
+            //    {
+            //        selectedAnswer.isCorrect = "isWrong";
+            //        bt_result.Content = "Falsch";
+            //    }
+            //    else
+            //    {
+            //        selectedAnswer.isCorrect = "isCorrect";
+            //        bt_result.Content = "Richtig";
+            //    }
 
-            }
+            //}
             
         }
 
+        private void bt_questionlistChange_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            var selectedQuestionBlock = cbx_questionListEdit.SelectedItem as QuestionBlock;
+            if (selectedQuestionBlock != null && tbx_questionlist.Text != "")
+            {
+                selectedQuestionBlock.Title = tbx_questionlist.Text;
+                tbx_questionlist.Text = "";
+                cbx_questionListEdit.ItemsSource = null;
+                cbx_questionListEdit.ItemsSource = questionBlockList;
+                cbx_questionListEdit.SelectedItem = selectedQuestionBlock;
+            }
+        }
 
+        private void bt_answerEdit_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            var selectedAnswer = lbx_answer.SelectedItem as AnswerOption;
+            if (selectedAnswer!=null && tbx_answer.Text!="")
+            {
+                selectedAnswer.Text = tbx_answer.Text;
+                tbx_answer.Text = "";
+            }
+        }
+
+        private void CheckBox_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+        }
     }
 }

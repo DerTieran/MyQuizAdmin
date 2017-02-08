@@ -12,12 +12,12 @@ namespace MyQuizAdmin.Models
     {
         private string notifyText { get; set; }
 
-        public int id { get; set; }
-        public string category { get; set; }//Abstimmung oder Quizfrage
-        public string type { get; set; }//Singlechoie oder Multilechoice
-        public string text
+        public long Id { get; set; }
+        public string Category { get; set; }//Abstimmung oder Quizfrage
+        public string Type { get; set; }//Singlechoie oder Multilechoice
+        public string Text
         {
-            set { notifyText = value; OnPropertyChanged("text");}
+            set { notifyText = value; OnPropertyChanged("Text");}
             get { return notifyText; }
         }
 

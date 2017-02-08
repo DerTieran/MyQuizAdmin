@@ -9,8 +9,8 @@ namespace MyQuizAdmin.Models
 {
     public class QuestionBlock
     {
-        public int id { get; set; }
-        public string title { get; set; }
+        public long Id { get; set; }
+        public string Title { get; set; }
 
         public ObservableCollection<Question> questions { get; set; } = new ObservableCollection<Question>();
     }
