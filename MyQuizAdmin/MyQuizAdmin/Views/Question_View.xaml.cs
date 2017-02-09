@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using Windows.UI.Xaml.Controls;
 using MyQuizAdmin.Models;
 using System.Collections.Generic;
+using Windows.UI.Popups;
 
 namespace MyQuizAdmin.Views
 {
@@ -25,7 +26,12 @@ namespace MyQuizAdmin.Views
         {
             cbx_questionCategory.ItemsSource = categoryList;
             cbx_questionType.ItemsSource = typeList;
-            questionBlockList = await request.questionnaireRequest();
+            var tempQuestionBlockList = await request.questionnaireRequest();
+            foreach (QuestionBlock questionnaire in tempQuestionBlockList)
+            {
+                if (questionnaire.Title!=null)
+                    questionBlockList.Add(questionnaire);
+            }
 
             cbx_questionListEdit.ItemsSource = questionBlockList;
         }
@@ -65,11 +71,6 @@ namespace MyQuizAdmin.Views
                     cbx_questionType.IsEnabled = true;
                 }
             }
-        }
-
-        private void asd()
-        {
-            throw new NotImplementedException();
         }
 
         private void cbx_questionTyp_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -167,10 +168,23 @@ namespace MyQuizAdmin.Views
         }
 
 
-        private void bt_questionSave_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private async void bt_questionSave_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             if (cbx_questionListEdit.SelectedItem != null)
-                request.questionairePost(cbx_questionListEdit.SelectedItem as QuestionBlock);
+            {
+                var saved = request.questionairePost(cbx_questionListEdit.SelectedItem as QuestionBlock);
+                if (saved != null)
+                {
+                    var dialog = new MessageDialog("Ihr Fragebogen wurde gespeichert");
+                    await dialog.ShowAsync();
+                }
+                else
+                {
+                    var dialog = new MessageDialog("Bei dem Speichervorgang ist leider etwas schiefgelaufen. Bitte versuchen sie es später erneut");
+                    await dialog.ShowAsync();
+                }
+
+            }
         }
 
         private void bt_questionlistChange_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)

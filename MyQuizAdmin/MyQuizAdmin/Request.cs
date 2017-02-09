@@ -129,9 +129,10 @@ namespace MyQuizAdmin
             return result;
         }
 
-        public async void questionairePost(QuestionBlock questionBlock)
+        public async Task <QuestionBlock> questionairePost(QuestionBlock questionBlock)
         {
-            await POST<QuestionBlock>("api/questionBlock/", questionBlock);
+            var result = await POST<QuestionBlock>("api/questionBlock/", questionBlock);
+            return result;
         }
     }
 }

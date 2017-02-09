@@ -24,7 +24,7 @@
                 <Button Name="bt_questionlistDel" Content="-" Width="40" Click="bt_questionlistDel_Click"/>
                 <Button Name="bt_questionlistAdd" Content="+" Width="40" Click="bt_questionlistAdd_Click"/>
                 <Button Name="bt_questionlistChange" Content="Edit" Width="60" Click="bt_questionlistChange_Click"/>
-                <Button Name="bt_questionSave" Content="Save" Width="60"  Click="bt_questionSave_Click"/>
+                <Button Name="bt_questionSave" Content="Save" Width="60"  Click="bt_questionSave_Click" VerticalAlignment="Bottom"/>
             </StackPanel>
             <ComboBox Name="cbx_questionListEdit" Width="500" DisplayMemberPath="Title"/>
             <ListBox x:Name="lbx_question" Margin="0,75,0,0" Height="600" DisplayMemberPath="Text" SelectionChanged="lbx_question_SelectionChanged" ItemsSource="{Binding SelectedItem.questions, ElementName=cbx_questionListEdit}"/>
