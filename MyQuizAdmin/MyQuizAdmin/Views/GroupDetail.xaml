@@ -31,7 +31,7 @@
         <Button HorizontalAlignment="Right" Grid.Row="2" Content="+" Name="addMember" Margin="0,9,60,9" Click="addMember_Click" Width="35" VerticalAlignment="Stretch"></Button>
         <Button HorizontalAlignment="Right" Grid.Row="2" Content="-" Name="delMember" Margin="0,9,15,9" IsEnabled="False" Click="delMember_Click" Width="35" VerticalAlignment="Stretch"></Button>
 
-        <ListBox Name="memberList" Grid.Row="3" ItemsSource="{Binding group.ObservableSingleTopics, ElementName=userControl, Mode=TwoWay}" SelectionChanged="memberList_SelectionChanged">
+        <ListBox Name="memberList" Grid.Row="3" ItemsSource="{Binding group.SingleTopics, ElementName=userControl, Mode=TwoWay}" SelectionChanged="memberList_SelectionChanged">
 
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -42,5 +42,6 @@
         </ListBox>
 
         <Button Name="saveButton" Margin="0,5,5,5"  HorizontalAlignment="Right" Content="speichern" FontSize="10" Grid.Row="4" VerticalAlignment="Stretch" RenderTransformOrigin="0.505,0.5" Click="saveButton_Click"></Button>
+        <Button Name="delButton" Margin="0,5,80,5"  HorizontalAlignment="Right" Content="löschen" FontSize="10" Grid.Row="4" VerticalAlignment="Stretch" RenderTransformOrigin="0.505,0.5" Click="delButton_Click"></Button>
     </Grid>
 </UserControl>
