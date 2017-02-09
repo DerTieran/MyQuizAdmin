@@ -12,6 +12,6 @@ namespace MyQuizAdmin.Models
         public long Id { get; set; }
         public string Title { get; set; }
 
-        public ObservableCollection<Question> questionList { get; set; }
+        public ObservableCollection<Question> questions { get; set; } = new ObservableCollection<Question>();
     }
 }

@@ -55,6 +55,7 @@ namespace MyQuizAdmin
             HttpClient client = getClient();
 
             T result = default(T);
+            var a = JsonConvert.SerializeObject(data);
             var content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
             HttpResponseMessage response = await client.PostAsync(path, content);
             if (response.StatusCode == HttpStatusCode.Unauthorized && path != "/api/devices")
@@ -124,24 +125,17 @@ namespace MyQuizAdmin
             ObservableCollection<QuestionBlock> result = new ObservableCollection<QuestionBlock>();
             result = await GET<ObservableCollection<QuestionBlock>>("api/questionBlock/");
 
-            /*****  Testdaten  *****/
-            //if (result == null)
-            //{
-            //    QuestionBlock testQuestionnaire = new QuestionBlock();
-            //    testQuestionnaire.title = "Testliste";
-            //    Request request = new Request();
-            //    testQuestionnaire.questionList = await request.questionRequest();
-            //    result.Add(testQuestionnaire);
-            //}
-
-
             return result;
         }
 
-        public async Task<ObservableCollection<Question>> questionRequest()
+        public async void questionaireListPost(ObservableCollection<QuestionBlock> questionlist)
         {
-            ObservableCollection<Question> result = await GET<ObservableCollection<Question>>("api/questions/");
-            return result;
+            await POST<ObservableCollection<QuestionBlock>>("api/questionBlock/", questionlist);
+        }
+
+        public async void questionairePost(QuestionBlock questionBlock)
+        {
+            await POST<QuestionBlock>("api/questionBlock/", questionBlock);
         }
     }
 }
