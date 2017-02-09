@@ -23,7 +23,6 @@
                         <Setter Target="lv_static.(Grid.Row)" Value="0" />
                         <Setter Target="sp_settings.(Grid.Row)" Value="0" />
                         <Setter Target="sp_settings.Margin" Value="40,0,0,0" />
-                        <Setter Target="pr_loadingCharts.Margin" Value="100,100,0,769" />
                         <Setter Target="lv_static.Margin" Value="100,0,0,20"/>
                         <Setter Target="topHead.Height" Value="900"/>
                     </VisualState.Setters>
@@ -36,9 +35,11 @@
                         <Setter Target="sp_settings.(Grid.Column)" Value="0" />
                         <Setter Target="sp_settings.(Grid.Row)" Value="0" />
                         <Setter Target="lv_static.(Grid.Column)" Value="0" />
+                        <Setter Target="sp_info.(Grid.Column)" Value="0"/>
+                        <Setter Target="sp_info.(Grid.Row)" Value="1"/>
+                        <Setter Target="sp_info.Margin" Value="10,20,0,20"/>
                         <Setter Target="lv_static.(Grid.Row)" Value="1" />
                         <Setter Target="lv_static.Margin" Value="10,20,0,20"/>
-                        <Setter Target="pr_loadingCharts.Margin" Value="10,10,0,0" />
                         <Setter Target="sp_settings.Margin" Value="10,0,0,0" />
                     </VisualState.Setters>
                 </VisualState>
@@ -53,13 +54,15 @@
             <RowDefinition x:Name="downHead" />
         </Grid.RowDefinitions>
         <RelativePanel Name="sp_settings" Grid.Column="0" Grid.Row="0">
-            <TextBlock Name="txb_group" Text="Gruppen" />
+            <TextBlock Name="txb_group" Text="Veranstaltungen" />
             <ComboBox Name="cbx_groups" Width="400" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="30" SelectionChanged="cbx_groups_SelectionChanged" DisplayMemberPath="Title" RelativePanel.Below="txb_group"/>
-            <TextBox Margin="0,10,0,0" Name="txb_searchpeople" Width="400" Height="30" SelectionChanged="txb_searchpeople_SelectionChanged" RelativePanel.Below="cbx_groups" />
+            <TextBox PlaceholderText="Teilnehmer Suchen" Margin="0,10,0,0" Name="txb_searchpeople" Width="400" Height="30" SelectionChanged="txb_searchpeople_SelectionChanged" RelativePanel.Below="cbx_groups" />
             <ListBox  Name="lbx_people" Width="400" Margin="0,5,0,0"  SelectionChanged="lbx_people_SelectionChanged" DisplayMemberPath="Name" RelativePanel.Below="txb_searchpeople"/>
         </RelativePanel>
-        <ProgressRing Name="pr_loadingCharts" Grid.Row="0" Grid.Column="1" Height="200" Width="200" />
-        <TextBlock Name="txb_error" Grid.Row="0" Grid.Column="1" />
+        <StackPanel x:Name="sp_info" Grid.Row="0" Grid.Column="1">
+            <ProgressBar x:Name="prb_statistics" Visibility="Collapsed" Height="15" Width="300" IsIndeterminate="True" />
+            <TextBlock Name="txb_error" Height="20"  Grid.Row="0" Grid.Column="1" Margin="100,15,5,865" />
+        </StackPanel>
         <ListView  Margin="0,0,0,30"  Grid.Row="0" Grid.Column="1" Name="lv_static">
             <ListView.ItemTemplate>
                 <DataTemplate>

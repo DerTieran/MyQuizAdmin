@@ -86,14 +86,25 @@ namespace MyQuizAdmin.Views
 
         private async void cbx_groups_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            txb_error.Text = "";
+            lv_static.ItemsSource = null;
+            prb_statistics.Visibility = Windows.UI.Xaml.Visibility.Visible;
             var SelectedGroup = cbx_groups.SelectedItem as Group;
             if (SelectedGroup != null)
             {
-            lbx_people.ItemsSource = SelectedGroup.SingleTopics;
+                lbx_people.ItemsSource = SelectedGroup.SingleTopics;
+                data = await request.getGivenAnswersForGroup(SelectedGroup);
+                var aggregatedResults = aggregateQuestionResults(data);
+                if (aggregatedResults.Count > 0)
+                {
+                    lv_static.ItemsSource = aggregatedResults;
+                }
             }
-            lv_static.ItemsSource = null;           
-            data = await request.getGivenAnswersForGroup(SelectedGroup);
-            lv_static.ItemsSource = aggregateQuestionResults(data);              
+            if (lv_static.ItemsSource == null)
+            {
+                txb_error.Text = "Es wurden keine Daten gefunden";
+            }
+            prb_statistics.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
         }
 
         private async void txb_searchpeople_SelectionChanged(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -108,17 +119,26 @@ namespace MyQuizAdmin.Views
 
         private async void lbx_people_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            txb_error.Text = "";
             lv_static.ItemsSource = null;
+            prb_statistics.Visibility = Windows.UI.Xaml.Visibility.Visible;
             var SelectedGroup = cbx_groups.SelectedItem as Group;
             var SelectedTopic = lbx_people.SelectedItem as SingleTopic;
-            if (lbx_people.SelectedItem != null)
+            if (SelectedGroup != null && SelectedTopic != null)
             {
-                lv_static.ItemsSource = null;
-                pr_loadingCharts.IsActive = true;
                 data = await request.getGivenAnswersForTopicInGroup(SelectedTopic, SelectedGroup);
-                lv_static.ItemsSource = aggregateQuestionResults(data);
-                pr_loadingCharts.IsActive = false;
+                var aggregatedResults = aggregateQuestionResults(data);
+                if (aggregatedResults.Count > 0)
+                {
+                    lv_static.ItemsSource = aggregatedResults;
+                }
+
             }
+            if (lv_static.ItemsSource == null)
+            {
+                txb_error.Text = "Es wurden keine Daten gefunden";
+            }
+            prb_statistics.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             
         }
     }
