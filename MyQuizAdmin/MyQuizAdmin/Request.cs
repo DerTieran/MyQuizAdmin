@@ -109,6 +109,7 @@ namespace MyQuizAdmin
         {
 
             List<GivenAnswer> result = await GET<List<GivenAnswer>>("/api/givenAnswer?groupId=" + group.Id + "&singleTopicId=" + singleTopic.Id);
+            await Task.Delay(5000);
             return result;
         }
 
