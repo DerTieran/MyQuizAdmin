@@ -99,6 +99,18 @@ namespace MyQuizAdmin
             return result;
         }
 
+        public async Task <Group> updateOrCreateGroup(Group group)
+        {
+            Group result = await POST<Group>("/api/groups/", group);
+            return result;
+        }
+
+        public async Task<HttpStatusCode> deleteGroup(Group group)
+        {
+            HttpStatusCode result = await DELETE("/api/groups/" + group.Id + "/");
+            return result;
+        }
+
         public async Task <List<SingleTopic>> getTopicsForGroup(Group group)
         {
             List<SingleTopic> result = await GET<List<SingleTopic>>("/api/groups/" + group.Id + "/topics");          

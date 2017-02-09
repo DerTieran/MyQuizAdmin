@@ -1,5 +1,7 @@
-﻿using System;
+﻿using MyQuizAdmin.Models;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -19,10 +21,10 @@ namespace MyQuizAdmin.Views
 {
     public sealed partial class GroupDetail : UserControl
     {
-        public Models.Group group
+        public Group group
         {
             get {
-                return (Models.Group)GetValue(groupProperty);
+                return (Group)GetValue(groupProperty);
             }
             set {
                 SetValue(groupProperty, value);
@@ -30,13 +32,39 @@ namespace MyQuizAdmin.Views
         }
 
         // Using a DependencyProperty as the backing store for group.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty groupProperty =
-            DependencyProperty.Register("group", typeof(Models.Group), typeof(GroupDetail), null);
-
-
+        private static DependencyProperty groupProperty =
+            DependencyProperty.Register("group", typeof(Group), typeof(GroupDetail), null);
+        
         public GroupDetail()
         {
-            this.InitializeComponent();
+            InitializeComponent();
+        }
+
+        private void memberList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            delMember.IsEnabled = memberList.SelectedItem != null;
+        }
+
+        private void addMember_Click(object sender, RoutedEventArgs e)
+        {
+            var newTopic = new SingleTopic();
+            group.SingleTopics.Add(newTopic);
+            memberList.SelectedItem = newTopic;
+        }
+
+        private void delMember_Click(object sender, RoutedEventArgs e)
+        {
+            group.SingleTopics.RemoveAt(memberList.SelectedIndex);
+            if( memberList.Items.Count > 0 )
+            {
+                memberList.SelectedItem = memberList.Items.Last();
+            }
+        }
+
+        private async void saveButton_Click(object sender, RoutedEventArgs e)
+        {
+            var request = new Request();
+            var updatedGroup = await request.updateOrCreateGroup(group);
         }
     }
 }
