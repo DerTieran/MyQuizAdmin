@@ -27,16 +27,6 @@ namespace MyQuizAdmin.Views
             cbx_questionType.ItemsSource = typeList;
             questionBlockList = await request.questionnaireRequest();
 
-            //Testdaten
-            //QuestionBlock testQuestionnaire = new QuestionBlock();
-            //testQuestionnaire.title = "Testliste";
-            //Question testQuestion = new Question();
-            //testQuestion.category = "Abstimmung";
-            //testQuestion.multipleChoice = "Singlechoice";
-            //testQuestion.text = "testfrage";
-            //testQuestionnaire.questions.Add(testQuestion);
-            //questionBlockList.Add(testQuestionnaire);
-
             cbx_questionListEdit.ItemsSource = questionBlockList;
         }
 
@@ -65,6 +55,10 @@ namespace MyQuizAdmin.Views
             {
                 var question = lbx_question.SelectedItem as Question;
                 question.Category = cbx_questionCategory.SelectedItem as string;
+                if (question.Category == "Umfrage")
+                    cbx_questionType.IsEnabled = false;
+                else
+                    cbx_questionType.IsEnabled = true;
             }
         }
 
@@ -79,18 +73,6 @@ namespace MyQuizAdmin.Views
 
         }
 
-        private void lbx_answer_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //if (lbx_answer.SelectedItem!=null)
-            //{
-            //    var selectedAnswer = lbx_answer.SelectedItem as AnswerOption;
-            //    if (selectedAnswer.isCorrect == "isCorrect")
-            //        bt_result.Content = "Richtig";
-            //    else
-            //        bt_result.Content = "Falsch";
-            //}
-
-        }
 
         /*******************************
                   Click-Events
@@ -172,26 +154,6 @@ namespace MyQuizAdmin.Views
                 request.questionairePost(cbx_questionListEdit.SelectedItem as QuestionBlock);
         }
 
-        private void bt_result_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        { 
-            //var selectedAnswer = lbx_answer.SelectedItem as AnswerOption;
-            //if (selectedAnswer!=null)
-            //{
-            //    if (selectedAnswer.isCorrect == "isCorrect")
-            //    {
-            //        selectedAnswer.isCorrect = "isWrong";
-            //        bt_result.Content = "Falsch";
-            //    }
-            //    else
-            //    {
-            //        selectedAnswer.isCorrect = "isCorrect";
-            //        bt_result.Content = "Richtig";
-            //    }
-
-            //}
-            
-        }
-
         private void bt_questionlistChange_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             var selectedQuestionBlock = cbx_questionListEdit.SelectedItem as QuestionBlock;
@@ -215,9 +177,5 @@ namespace MyQuizAdmin.Views
             }
         }
 
-        private void CheckBox_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-
-        }
     }
-}
+}   
