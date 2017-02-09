@@ -26,11 +26,14 @@ namespace MyQuizAdmin.Controls
             this.InitializeComponent();
         }
 
+        Request request = new Request();
+
         private async void loginButton_Click(object sender, RoutedEventArgs e)
         {
             loginButton.IsEnabled = false;
             passwordBox.IsEnabled = false;
-            Request request = new Request();
+            helpText.Visibility = Visibility.Collapsed;
+            loginPB.Visibility = Visibility.Visible;
             RegistrationResponse register = await request.register(new RegistrationData
             {
                 password = passwordBox.Password
@@ -40,14 +43,15 @@ namespace MyQuizAdmin.Controls
             {
                 Windows.Storage.ApplicationData.Current.RoamingSettings.Values["deviceID"] = register.Id.ToString();
                 Hide();
+                return;
             }
-            else
-            {
-                helpText.Text = "Falsches Passwort! Bitte nochmal eingeben.";
-                helpText.Foreground = new SolidColorBrush(Colors.Red);
-            }
+
             loginButton.IsEnabled = true;
             passwordBox.IsEnabled = true;
+            helpText.Text = "Falsches Passwort! Bitte nochmal eingeben.";
+            helpText.Foreground = new SolidColorBrush(Colors.Red);
+            helpText.Visibility = Visibility.Visible;
+            loginPB.Visibility = Visibility.Collapsed;
             passwordBox.Focus(FocusState.Programmatic);
             passwordBox.SelectAll();
         }

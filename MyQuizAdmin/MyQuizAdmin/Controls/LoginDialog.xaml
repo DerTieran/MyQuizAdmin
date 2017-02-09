@@ -11,7 +11,10 @@
     <Grid>
         <StackPanel>
             <PasswordBox x:Name="passwordBox" HorizontalAlignment="Stretch" KeyUp="passwordBox_KeyUp" PasswordChanged="passwordBox_PasswordChanged"/>
-            <TextBlock x:Name="helpText" TextWrapping="Wrap" Text="Bitte Passwort eingeben." Height="75" />
+            <StackPanel Height="75">
+                <TextBlock x:Name="helpText" TextWrapping="Wrap" Text="Bitte Passwort eingeben." />
+                <ProgressBar x:Name="loginPB" Height="15" IsIndeterminate="True" Visibility="Collapsed"/>
+            </StackPanel>
             <Button x:Name="loginButton" Content="Login" Click="loginButton_Click" HorizontalAlignment="Stretch" IsEnabled="False"/>
         </StackPanel>
     </Grid>
