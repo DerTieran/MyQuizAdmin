@@ -218,18 +218,12 @@ namespace MyQuizAdmin.Views
 
             if (cbx_questionType.SelectedItem as string == "Singlechoice")
             {
-                int rightAnswerCount = 0;
                 int rightAnswerIndex = 0;
                 foreach (AnswerOption answer in selectedQuestion.answerOptions)
                 {
                     if (answer.Result == "true")
-                    {
-                        rightAnswerCount++;
                         rightAnswerIndex = selectedQuestion.answerOptions.IndexOf(answer);
-                    }
-
                 }
-                if (rightAnswerCount > 1)
                     selectedQuestion.answerOptions[rightAnswerIndex].Result = "false";
             }
         }
