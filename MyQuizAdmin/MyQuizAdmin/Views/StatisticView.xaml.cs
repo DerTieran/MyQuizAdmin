@@ -82,10 +82,16 @@ namespace MyQuizAdmin.Views
         private async void cbx_groups_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var SelectedGroup = cbx_groups.SelectedItem as Group;
-            lbx_people.ItemsSource = SelectedGroup.SingleTopics;
+            if (lbx_people.ItemsSource != null)
+            {
+                lbx_people.ItemsSource = SelectedGroup.SingleTopics;
+            }           
             lv_static.ItemsSource = null;
             List<GivenAnswer> data = await request.getGivenAnswersForGroup(SelectedGroup);
-            lv_static.ItemsSource = aggregateQuestionResults(data);
+            if (lv_static.ItemsSource != null)
+            {
+                lv_static.ItemsSource = aggregateQuestionResults(data);
+            }                  
         }
 
         private async void txb_searchpeople_SelectionChanged(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -100,10 +106,25 @@ namespace MyQuizAdmin.Views
 
         private async void lbx_people_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            
             var SelectedGroup = cbx_groups.SelectedItem as Group;
             var SelectedTopic = lbx_people.SelectedItem as SingleTopic;
+            lv_static.ItemsSource = null;
+            pr_loadingCharts.IsActive = true;
             List<GivenAnswer> data = await request.getGivenAnswersForTopicInGroup(SelectedTopic, SelectedGroup);
-            lv_static.ItemsSource = aggregateQuestionResults(data);
+            pr_loadingCharts.IsActive = false;
+            if (lv_static.ItemsSource != null)
+            {
+                lv_static.ItemsSource = aggregateQuestionResults(data);
+            }          
+            if (lv_static.ItemsSource == null)
+            {
+                txb_error.Text = "Es sind keine Statistiken vorhanden";
+            }
+            else
+            {
+                txb_error.Text = "";
+            }
         }
     }
 }
