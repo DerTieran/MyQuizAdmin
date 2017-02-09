@@ -113,11 +113,16 @@ namespace MyQuizAdmin.Views
             var SelectedTopic = lbx_people.SelectedItem as SingleTopic;
             if (lbx_people.SelectedItem != null)
             {
+                txb_error.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                 lv_static.ItemsSource = null;
-                pr_loadingCharts.IsActive = true;
-                data = await request.getGivenAnswersForTopicInGroup(SelectedTopic, SelectedGroup);
-                lv_static.ItemsSource = aggregateQuestionResults(data);
-                pr_loadingCharts.IsActive = false;
+               prb_statistics.Visibility = Windows.UI.Xaml.Visibility.Visible; 
+               data = await request.getGivenAnswersForTopicInGroup(SelectedTopic, SelectedGroup);
+               lv_static.ItemsSource = aggregateQuestionResults(data);
+                prb_statistics.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            }
+            else
+            {
+                txb_error.Text = "Es wurden keine Daten gefunden";
             }
             
         }
