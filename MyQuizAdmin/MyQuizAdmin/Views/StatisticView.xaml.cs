@@ -16,6 +16,7 @@ namespace MyQuizAdmin.Views
     {       
         bool LayoutUpdateFlag = true;
         Request request = new Request();
+        List<GivenAnswer> data = new List<GivenAnswer>();
 
         public StatisticView()
         {
@@ -24,7 +25,8 @@ namespace MyQuizAdmin.Views
 
         private async void Page_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            List<Group> groupResponList = await request.GetGroups();             
+            List<Group> groupResponList = new List<Group>();
+            groupResponList = await request.GetGroups();             
             cbx_groups.ItemsSource = groupResponList;          
         }
 
@@ -45,35 +47,38 @@ namespace MyQuizAdmin.Views
         private List<QuestionResult> aggregateQuestionResults(List<GivenAnswer> givenAnswers)
         {
             return givenAnswers.Aggregate(new List<QuestionResult>(), (questionResults, givenAnswer) => {
-                var foundQuestion = questionResults.Find(question => question.id == givenAnswer.Question.Id);
-                if (foundQuestion != null)
+                if (givenAnswer.Question != null && givenAnswer.AnswerOption != null)
                 {
-                    var foundAnswer = foundQuestion.answers.Find(answer => answer.id == givenAnswer.AnswerOption.Id);
-                    if (foundAnswer != null)
+                    var foundQuestion = questionResults.Find(question => question.id == givenAnswer.Question.Id);
+                    if (foundQuestion != null)
                     {
-                        foundAnswer.count = foundAnswer.count + 1;
+                        var foundAnswer = foundQuestion.answers.Find(answer => answer.id == givenAnswer.AnswerOption.Id);
+                        if (foundAnswer != null)
+                        {
+                            foundAnswer.count = foundAnswer.count + 1;
+                        }
+                        else
+                        {
+                            foundQuestion.answers.Add(new QuestionResult.Answer
+                            {
+                                id = givenAnswer.AnswerOption.Id,
+                                text = givenAnswer.AnswerOption.Text
+                            });
+                        }
                     }
                     else
                     {
-                        foundQuestion.answers.Add(new QuestionResult.Answer
+                        questionResults.Add(new QuestionResult
                         {
-                            id = givenAnswer.AnswerOption.Id,
-                            text = givenAnswer.AnswerOption.Text
-                        });
-                    }
-                }
-                else
-                {
-                    questionResults.Add(new QuestionResult
-                    {
-                        id = givenAnswer.Question.Id,
-                        text = givenAnswer.Question.Text,
-                        answers = new List<QuestionResult.Answer> { new QuestionResult.Answer
+                            id = givenAnswer.Question.Id,
+                            text = givenAnswer.Question.Text,
+                            answers = new List<QuestionResult.Answer> { new QuestionResult.Answer
                         {
                             id = givenAnswer.AnswerOption.Id,
                             text = givenAnswer.AnswerOption.Text
                         } }
-                    });
+                        });
+                    }
                 }
                 return questionResults;
             });
@@ -82,10 +87,13 @@ namespace MyQuizAdmin.Views
         private async void cbx_groups_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var SelectedGroup = cbx_groups.SelectedItem as Group;
+            if (SelectedGroup != null)
+            {
             lbx_people.ItemsSource = SelectedGroup.SingleTopics;
-            lv_static.ItemsSource = null;
-            List<GivenAnswer> data = await request.getGivenAnswersForGroup(SelectedGroup);
-            lv_static.ItemsSource = aggregateQuestionResults(data);
+            }
+            lv_static.ItemsSource = null;           
+            data = await request.getGivenAnswersForGroup(SelectedGroup);
+            lv_static.ItemsSource = aggregateQuestionResults(data);              
         }
 
         private async void txb_searchpeople_SelectionChanged(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -100,10 +108,19 @@ namespace MyQuizAdmin.Views
 
         private async void lbx_people_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            lv_static.ItemsSource = null;
             var SelectedGroup = cbx_groups.SelectedItem as Group;
             var SelectedTopic = lbx_people.SelectedItem as SingleTopic;
-            List<GivenAnswer> data = await request.getGivenAnswersForTopicInGroup(SelectedTopic, SelectedGroup);
-            lv_static.ItemsSource = aggregateQuestionResults(data);
+            if (lbx_people.SelectedItem != null)
+            {
+                lv_static.ItemsSource = null;
+                pr_loadingCharts.IsActive = true;
+                data = await request.getGivenAnswersForTopicInGroup(SelectedTopic, SelectedGroup);
+                lv_static.ItemsSource = aggregateQuestionResults(data);
+                pr_loadingCharts.IsActive = false;
+            }
+            
         }
     }
 }
+
