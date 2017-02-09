@@ -1,6 +1,9 @@
 ﻿using MyQuizAdmin.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Net;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -11,21 +14,56 @@ namespace MyQuizAdmin.Views
     /// </summary>
     public sealed partial class GroupPage : Page
     {
-        public List<Group> Groups { get; private set; }
+        public ObservableCollection<Group> Groups { get; set; }
 
         public GroupPage()
         {
-            Groups = new List<Group>
-            {
-                new Group { Id = 0, Title = "g0" },
-                new Group { Id = 1, Title = "g1" },
-                new Group { Id = 2, Title = "g2" },
-                new Group { Id = 3, Title = "g3" },
-                new Group { Id = 4, Title = "g4" }
-            };
-            
             this.InitializeComponent();
+
+            Groups = new ObservableCollection<Group> { };
+
+            this.getData();
         }
 
+        public async void getData()
+        {
+            var request = new Request();
+            var freshGroups = await request.GetGroups();
+            Groups.Clear();
+
+            foreach (var item in freshGroups)
+            {
+                var stReq = new Request();
+                var freshList = await request.getTopicsForGroup(item);
+                item.SingleTopics.Clear();
+
+                foreach (var stItem in freshList)
+                {
+                    item.SingleTopics.Add(stItem);
+                }
+
+                Groups.Add(item);
+            }
+        }
+        
+        private void addGroup_Click(object sender, RoutedEventArgs e)
+        {
+            var newGroup = new Group();
+            Groups.Add(newGroup);
+            masterDetailsView.SelectedItem = newGroup;
+        }
+
+        private async void delGroup_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedGroup = (Group) masterDetailsView.SelectedItem;
+            Groups.Remove( (Group) masterDetailsView.SelectedItem );
+            var request = new Request();
+            var success = await request.deleteGroup(selectedGroup);
+
+            if ( success == HttpStatusCode.Accepted && Groups.Count > 0 )
+            {
+                masterDetailsView.SelectedItem = Groups[Groups.Count - 1];
+            }
+        }
     }
 }
