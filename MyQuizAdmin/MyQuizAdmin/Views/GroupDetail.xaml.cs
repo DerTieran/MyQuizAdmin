@@ -54,10 +54,11 @@ namespace MyQuizAdmin.Views
 
         private void delMember_Click(object sender, RoutedEventArgs e)
         {
-            group.SingleTopics.RemoveAt(memberList.SelectedIndex);
-            if( memberList.Items.Count > 0 )
+            group.SingleTopics.Remove((SingleTopic) memberList.SelectedItem);
+
+            if (group.SingleTopics.Count > 0 )
             {
-                memberList.SelectedItem = memberList.Items.Last();
+                memberList.SelectedItem = group.SingleTopics.Last();
             }
         }
 
@@ -65,6 +66,18 @@ namespace MyQuizAdmin.Views
         {
             var request = new Request();
             var updatedGroup = await request.updateOrCreateGroup(group);
+            //Console.WriteLine("");
+            Parent.GetType();
+        }
+
+        private async void delButton_Click(object sender, RoutedEventArgs e)
+        {
+            var request = new Request();
+            var success = await request.deleteGroup(group) == System.Net.HttpStatusCode.OK;
+            if (success)
+            {
+                Group.AllGroups.Remove(group);
+            }
         }
     }
 }

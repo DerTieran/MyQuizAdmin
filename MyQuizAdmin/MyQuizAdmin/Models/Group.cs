@@ -5,7 +5,9 @@ using System.ComponentModel;
 namespace MyQuizAdmin.Models
 {
     public class Group : INotifyPropertyChanged
-    {       
+    {
+        public static ObservableCollection<Group> AllGroups { get; set; }
+        
         public long Id { get; set; }
 
         private string _title { get; set; }
@@ -19,19 +21,8 @@ namespace MyQuizAdmin.Models
             set { _enterGroupPin = value; OnPropertyChanged("EnterGroupPin"); }
         }
         
-        public List<SingleTopic> SingleTopics { get; set; }
-
-        public ObservableCollection<SingleTopic> ObservableSingleTopics
-        { get
-            {
-                return new ObservableCollection<SingleTopic>(SingleTopics);
-            }
-            set
-            {
-                SingleTopics = new List<SingleTopic>(value);
-            }
-        }
-
+        public ObservableCollection<SingleTopic> SingleTopics { get; set; }
+        
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void OnPropertyChanged(string propertyName)
@@ -45,7 +36,7 @@ namespace MyQuizAdmin.Models
 
         public Group()
         {
-            SingleTopics = new List<SingleTopic>();
+            SingleTopics = new ObservableCollection<SingleTopic>();
         }
     }
 }

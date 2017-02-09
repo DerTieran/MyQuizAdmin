@@ -20,7 +20,11 @@ namespace MyQuizAdmin.Views
         {
             this.InitializeComponent();
 
-            Groups = new ObservableCollection<Group> { };
+            if ( Group.AllGroups == null )
+            {
+                Group.AllGroups = new ObservableCollection<Group> { };
+            }
+            Groups = Group.AllGroups;
 
             this.getData();
         }
@@ -33,6 +37,7 @@ namespace MyQuizAdmin.Views
 
             foreach (var item in freshGroups)
             {
+                /*
                 var stReq = new Request();
                 var freshList = await request.getTopicsForGroup(item);
                 item.SingleTopics.Clear();
@@ -41,7 +46,7 @@ namespace MyQuizAdmin.Views
                 {
                     item.SingleTopics.Add(stItem);
                 }
-
+                */
                 Groups.Add(item);
             }
         }
