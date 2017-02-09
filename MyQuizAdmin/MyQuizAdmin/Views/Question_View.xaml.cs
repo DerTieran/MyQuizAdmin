@@ -65,10 +65,12 @@ namespace MyQuizAdmin.Views
                 if (question.Category == "Umfrage")
                 {
                     cbx_questionType.IsEnabled = false;
+                    tbl_result.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                 }
                 else
                 {
                     cbx_questionType.IsEnabled = true;
+                    tbl_result.Visibility = Windows.UI.Xaml.Visibility.Visible;
                 }
             }
         }
