@@ -5,10 +5,13 @@ namespace MyQuizAdmin.Models
     public class AnswerOption:INotifyPropertyChanged
     {
         public long Id { get; set; }
+        private string notifyResult { get; set; }
+        public string Result
+        {
+            set { notifyResult = value; OnPropertyChanged("Result"); }
+            get { return notifyResult; }
+        }
         private string notifyText { get; set; }
-        public string Result { get; set; }
-        //public bool IsCorrect { get; set; }
-
         public string Text
         {
             set { notifyText = value; OnPropertyChanged("Text"); }
@@ -25,6 +28,7 @@ namespace MyQuizAdmin.Models
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+        
 
     }
 }
