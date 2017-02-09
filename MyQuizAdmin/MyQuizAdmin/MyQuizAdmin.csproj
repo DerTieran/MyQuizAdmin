@@ -108,6 +108,7 @@
     </Compile>
     <Compile Include="Models\AnswerOption.cs" />
     <Compile Include="Models\Group.cs" />
+    <Compile Include="Models\MyConverter.cs" />
     <Compile Include="Models\Registration.cs" />
     <Compile Include="Models\Result.cs" />
     <Compile Include="Models\SingleTopic.cs" />

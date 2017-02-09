@@ -55,6 +55,10 @@ namespace MyQuizAdmin.Views
             {
                 var question = lbx_question.SelectedItem as Question;
                 question.Category = cbx_questionCategory.SelectedItem as string;
+                if (question.Category == "Umfrage")
+                    cbx_questionType.IsEnabled = false;
+                else
+                    cbx_questionType.IsEnabled = true;
             }
         }
 
@@ -173,9 +177,5 @@ namespace MyQuizAdmin.Views
             }
         }
 
-        private void CheckBox_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-
-        }
     }
-}
+}   
