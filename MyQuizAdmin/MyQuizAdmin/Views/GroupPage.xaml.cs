@@ -1,4 +1,5 @@
-﻿using MyQuizAdmin.Models;
+﻿using Microsoft.Toolkit.Uwp.UI.Controls;
+using MyQuizAdmin.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -37,16 +38,6 @@ namespace MyQuizAdmin.Views
 
             foreach (var item in freshGroups)
             {
-                /*
-                var stReq = new Request();
-                var freshList = await request.getTopicsForGroup(item);
-                item.SingleTopics.Clear();
-
-                foreach (var stItem in freshList)
-                {
-                    item.SingleTopics.Add(stItem);
-                }
-                */
                 Groups.Add(item);
             }
         }
