@@ -37,6 +37,7 @@ namespace MyQuizAdmin
             if (System.Diagnostics.Debugger.IsAttached)
             {
                 this.DebugSettings.EnableFrameRateCounter = true;
+                Windows.Storage.ApplicationData.Current.RoamingSettings.Values["deviceID"] = null;
             }
 #endif
 

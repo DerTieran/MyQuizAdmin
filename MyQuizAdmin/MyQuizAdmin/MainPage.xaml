@@ -68,7 +68,6 @@
                 </TransitionCollection>
             </Popup.ChildTransitions>
             <Grid Width="380" Height="{Binding ElementName=flyoutPane, Path=Height}"  Background="{ThemeResource FlyoutBackgroundThemeBrush}" >
-                <TextBlock Text="Grid contents here" />
             </Grid>
         </Popup>
 
