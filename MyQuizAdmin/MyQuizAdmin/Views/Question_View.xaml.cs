@@ -65,10 +65,12 @@ namespace MyQuizAdmin.Views
                 if (question.Category == "Umfrage")
                 {
                     cbx_questionType.IsEnabled = false;
+                    tbl_result.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                 }
                 else
                 {
                     cbx_questionType.IsEnabled = true;
+                    tbl_result.Visibility = Windows.UI.Xaml.Visibility.Visible;
                 }
             }
         }
@@ -216,18 +218,12 @@ namespace MyQuizAdmin.Views
 
             if (cbx_questionType.SelectedItem as string == "Singlechoice")
             {
-                int rightAnswerCount = 0;
                 int rightAnswerIndex = 0;
                 foreach (AnswerOption answer in selectedQuestion.answerOptions)
                 {
                     if (answer.Result == "true")
-                    {
-                        rightAnswerCount++;
                         rightAnswerIndex = selectedQuestion.answerOptions.IndexOf(answer);
-                    }
-
                 }
-                if (rightAnswerCount > 1)
                     selectedQuestion.answerOptions[rightAnswerIndex].Result = "false";
             }
         }

@@ -18,7 +18,8 @@
             </ResourceDictionary>
         </Grid.Resources>
         <!--Controlpanel-->
-        <StackPanel Margin="300,100,0,0" Width="500" VerticalAlignment="Top" HorizontalAlignment="Left">
+        <StackPanel Margin="300,80,0,0" Width="500" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <TextBlock Text="Fragebogen" Height="20"/>
             <StackPanel Orientation="Horizontal" Height="30">
                 <TextBox Name="tbx_questionlist" Width="300"/>
                 <Button Name="bt_questionlistDel" Content="-" Width="40" Click="bt_questionlistDel_Click"/>
@@ -27,7 +28,8 @@
                 <Button Name="bt_questionSave" Content="Save" Width="60"  Click="bt_questionSave_Click" VerticalAlignment="Bottom"/>
             </StackPanel>
             <ComboBox Name="cbx_questionListEdit" Width="500" DisplayMemberPath="Title"/>
-            <ListBox x:Name="lbx_question" Margin="0,75,0,0" Height="600" DisplayMemberPath="Text" SelectionChanged="lbx_question_SelectionChanged" ItemsSource="{Binding SelectedItem.questions, ElementName=cbx_questionListEdit}"/>
+            <TextBlock Text="Fragebogen" Margin="0,75,0,0" Height="20"/>
+            <ListBox x:Name="lbx_question"  Height="600" DisplayMemberPath="Text" SelectionChanged="lbx_question_SelectionChanged" ItemsSource="{Binding SelectedItem.questions, ElementName=cbx_questionListEdit}"/>
             <StackPanel Orientation="Horizontal">
                 <Button Name="bt_questionDel" Content="-" Width="100" Click="bt_questionDel_Click"/>
                 <Button Name="bt_questionAdd" Content="+" Width="100" Margin="300,0,0,0" Click="bt_questionAdd_Click"/>
@@ -38,11 +40,14 @@
         <StackPanel Margin="1000,110,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="500" DataContext="{Binding ElementName=lbx_question,Path=SelectedItem,Mode=TwoWay}">
             <TextBlock Text="Fragekategory" Height="22"/>
             <ComboBox Name="cbx_questionCategory" Width="500" SelectionChanged="cbx_questionCategory_SelectionChanged"/>
-            <TextBlock Text="Fragentyp" Margin="0,50,0,0" Height="22"/>
+            <TextBlock Text="Fragentyp" Margin="0,70,0,0" Height="22"/>
             <ComboBox Name="cbx_questionType" Width="500" SelectionChanged="cbx_questionTyp_SelectionChanged"/>
             <TextBlock Text="Frage" Margin="0,80,0,0" Height="22"/>
             <TextBox x:Name="tbx_question" Height="110" TextWrapping="Wrap" AcceptsReturn="True" Text="{Binding Text, Mode=TwoWay}"/>
-            <TextBlock Text="Antworten" Margin="0,70,0,0" Height="22"/>
+            <StackPanel Orientation="Horizontal" Margin="0,70,0,0">
+                <TextBlock Text="Antworten"  Height="22"/>
+                <TextBlock Name="tbl_result" Text="Ergebnis" Height="22" HorizontalAlignment="Right" Margin="370,0,0,0"/>
+            </StackPanel>
             <ListBox Name="lbx_answer" Height="265">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
